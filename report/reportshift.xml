@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/ostation/static/src/css/ostation.css"/>
+			<link rel='stylesheet' href="/ostation/static/src/css/sodigaz1.css"/>
+		</xpath>
+    </template>
+
+    <template id='reportshift_template'>
+        <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="30"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+            <t t-call="web.internal_layout">
+                <div class="page">
+                       
+                       
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Etat: <strong>Recapitulatif des Shifts</strong></h3> 
+                            <span class="float-right"> <strong>Status:</strong> Valide</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <h6 class="mb-3">DU:</h6>
+                                    <div>
+                                        <strong><span t-esc="data['debut']"/></strong>
+                                    </div>
+                                    <!-- <div>Madalinskiego 8</div>
+                                    <div>71-101 Szczecin, Poland</div>
+                                    <div>Email: info@webz.com.pl</div>
+                                    <div>Phone: +48 444 666 3333</div> -->
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="mb-3">AU:</h6>
+                                    <div>
+                                        <strong><span t-esc="data['fin']"/></strong>
+                                    </div>
+                                    <!-- <div>Attn: Daniel Marek</div>
+                                    <div>43-190 Mikolow, Poland</div>
+                                    <div>Email: marek@daniel.com</div>
+                                    <div>Phone: +48 123 456 789</div> -->
+                                </div>
+                            </div>
+
+                            <div class="table-responsive-sm">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Shift</th>
+                                            <th class="left">T. carburant</th>
+                                            <th class="left">T. lubrifiant</th>
+                                            <th class="left">T. gaz-consigne</th>
+                                            <th class="left">T. gaz-recharge</th>
+                                            <th class="left">T. Solaire</th>
+                                            <th class="left">T. accessoire</th>
+                                            <th class="left">T. Thorique</th>
+                                            <th class="left">T. versé</th>
+                                            <th class="left">T. ecart</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                         <t t-set="montantcarburant" t-value="0" />     
+                                         <t t-set="montantlubrifiant" t-value="0" />
+                                         <t t-set="montantconsignegaz" t-value="0" />     
+                                         <t t-set="montantrechargegaz" t-value="0" />
+                                         <t t-set="montantsolaire" t-value="0" />     
+                                         <t t-set="montantaccessoire" t-value="0" />
+                                         <t t-set="montanttotaltheorique" t-value="0" />     
+                                         <t t-set="montanttotal" t-value="0" />
+                                         <t t-set="ecarttotal" t-value="0" />
+                                        
+                                        <t t-foreach="docs" t-as="doc">
+                                            <tr>
+                                                <td><span t-esc="doc['name']"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(doc['montantcarburant']).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(doc['montantlubrifiant']).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(doc['montantconsignegaz']).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(doc['montantrechargegaz']).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(doc['montantsolaire']).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(doc['montantaccessoire']).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(doc['montanttotaltheorique']).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(doc['montanttotal']).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(doc['ecarttotal']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </tr>
+                                            <t t-set="montantcarburant" t-value="montantcarburant + doc['montantcarburant']" />     
+                                            <t t-set="montantlubrifiant" t-value="montantlubrifiant + doc['montantlubrifiant']" />
+                                            <t t-set="montantconsignegaz" t-value="montantconsignegaz + doc['montantconsignegaz']" />     
+                                            <t t-set="montantrechargegaz" t-value="montantrechargegaz + doc['montantrechargegaz']" />
+                                            <t t-set="montantsolaire" t-value="montantsolaire + doc['montantsolaire']" />     
+                                            <t t-set="montantaccessoire" t-value="montantaccessoire + doc['montantaccessoire']" />
+                                            <t t-set="montanttotaltheorique" t-value="montanttotaltheorique + doc['montanttotaltheorique']" />     
+                                            <t t-set="montanttotal" t-value="montanttotal + doc['montanttotal']" />
+                                            <t t-set="ecarttotal" t-value="ecarttotal + doc['ecarttotal']" />
+                                        </t>
+                                        <tr>
+                                                <td>TOTAL</td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(montantcarburant).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(montantlubrifiant).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(montantconsignegaz).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(montantrechargegaz).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(montantsolaire).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(montantaccessoire).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(montanttotaltheorique).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(montanttotal).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.0f}'.format(ecarttotal).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                   
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col-5">
+
+                                </div>
+
+                                <div class="col-5">
+                                    <table class="table table-clear">
+                                        <tbody>
+                                            <tr>
+                                            <td class="left">
+                                            <strong>Subtotal</strong>
+                                            </td>
+                                            <td class="right">$8.497,00</td>
+                                            </tr>
+                                            <tr>
+                                            <td class="left">
+                                            <strong>Discount (20%)</strong>
+                                            </td>
+                                            <td class="right">$1,699,40</td>
+                                            </tr>
+                                            <tr>
+                                            <td class="left">
+                                            <strong>VAT (10%)</strong>
+                                            </td>
+                                            <td class="right">$679,76</td>
+                                            </tr>
+                                            <tr>
+                                            <td class="left">
+                                            <strong>Total</strong>
+                                            </td>
+                                            <td class="right">
+                                            <strong>$7.477,36</strong>
+                                            </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+            </t>
+           
+        </t>
+    </template>
+
+
+     
+
+</odoo>

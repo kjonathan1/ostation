@@ -1,0 +1,913 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+     <!--#######  debut journee ########-->
+
+         <record id="ostation_minicaisse_form" model="ir.ui.view">
+	         <field name="name">ostation.minicaisse.form</field>
+             <field name="model">ostation.minicaisse</field>
+             <field name="arch" type="xml">
+	         <form string="Minicaisse">
+                <header>   
+                    <button name="valider" type="object" string="Cloturer la caisse" class="btn-primary" states="brouillon"/>
+                    <button name="retour" type="object" string="Mettre en brouillon" class="btn-primary" attrs="{'invisible': [('state', '!=', 'valide')]}"/>
+                    <button name="annuler" type="object" string="Annuler" class="btn-primary" states="valide"/>
+					<field name="state" widget="statusbar" statusbar_visible="brouillon,valide,annuler"/>
+				</header>
+                <sheet >
+                    <group>
+
+                        <group >
+                            <field name="idstation" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                            <field name="name" attrs="{'readonly': [('state', '!=', 'brouillon')]}"/>
+                            <field name="date" attrs="{'readonly': [('state', '!=', 'brouillon')]}"/>
+                        </group>
+                        <group >
+                            <field name="soldefinal" readonly='1'/>
+                        </group>
+                    </group>
+                
+                    
+                    <notebook>
+                        <!-- les depenses -->
+                        <page string="Dépenses"> 
+                            <field name="lignedepense" attrs="{'readonly': [('state', '!=', 'brouillon')]}">
+                                <tree editable="bottom"   open="false" string="Détails dépenses">
+                                    <field name="date" />
+                                    <field name="idemploye"  options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="name" />
+                                    <field name="description" />
+                                    <field name="montant" sum="Total" />
+                                 </tree>
+                            </field>
+                        </page>
+                        <!-- les appro mini-caisse -->
+                        <page string="Appro-minicaisse"> 
+                            <field name="ligneapprominicaisse" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}">
+                                <tree editable="bottom" string="Détails appro-minicaisse">
+                                    <field name="date" />
+                                     <field name="idemploye" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="name" />
+                                    <field name="montant"  sum="Total"/>
+                                 </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+               </form>
+			</field>
+	    </record>
+
+        
+        <record id ="minicaisse_tree_view" model="ir.ui.view">
+            <field name="name">ostation.minicaisse.tree</field>
+            <field name="model">ostation.minicaisse</field>
+            <field name="arch" type="xml">
+               <tree string = "Minicaisse">    
+                 <field name="idstation"/>
+                 <field name="name"/>
+                 <field name="soldefinal"/>
+              </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_minicaisse">
+            <field name="name">Minicaisse</field>
+            <field name="res_model">ostation.minicaisse</field>
+            <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="minicaisse_tree_view"/>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face"> Ajouter une minicaisse
+            </p>
+            </field>
+        </record> 
+
+         <!--#######  debut lignevente ########-->
+
+         <record id="ostation_lignevente_form" model="ir.ui.view">
+	         <field name="name">ostation.lignevente.form</field>
+             <field name="model">ostation.lignevente</field>
+             <field name="arch" type="xml">
+	         <form string="Journée" version="7.0">
+                <header>
+					<field name="state" widget="statusbar" statusbar_visible="brouillon,valide,annuler"/>
+				</header>
+                <sheet >
+                    <group>
+                        <group >
+                            <field name="idemploye" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                            <field name="idpompe" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                        </group>
+                        <group >
+                            <field name="montanttotalcarburant" />
+                            <field name="montanttotallubrifiant" />
+                            <field name="montanttotalconsignegaz" />
+                            <field name="montanttotalrechargegaz" />
+                            <field name="montanttotalsolaire" />
+                            <field name="montanttotalaccessoire" />
+                            <field name="montanttotaltheorique" />
+                            <field name="montanttotalverse" />
+                            <field name="ecart" />
+                        </group>
+                        
+                    </group>
+                    <notebook>
+                        <!-- les ventes -->
+                        <page string="Détails des ventes "> 
+                            <field name="ligneventedetail" context="{'idpompetmp':idpompe}" attrs="{'readonly': [('state', '!=', 'brouillon')]}">
+                                <tree editable="bottom" string="Vente détails">
+
+                                    <field name="idlignevente" invisible="1"/>
+                                    <field name="categoriearticle" invisible="1"/>
+                                    <field name="idpistolet"  options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="idarticle"/>
+                                    <field name="retourcuve" attrs="{'invisible': [('categoriearticle', '!=', 'carburant')]}"/>
+                                    <field name="indexdebut" attrs="{'invisible': [('categoriearticle', '!=', 'carburant')]}"/>
+                                    <field name="indexfin" attrs="{'invisible': [('categoriearticle', '!=', 'carburant')]}"/>
+                                    <field name="prixunitaire"  />
+                                    <field name="quantitetheorique" />
+                                    <field name="montanttheorique"  sum="Total"/>
+                                    <!-- <field name="dateshift"/>
+                                    <field name="ordreshift" /> -->
+                                    
+                                </tree>
+                            </field>
+                           
+                        </page>
+                        <page string="Détails versements"> 
+                            <field name="ligneversement" attrs="{'readonly': [('state', '!=', 'brouillon')]}">
+                                <tree editable="bottom" string="Détails versement">
+                                    <field name="idtypepaiement" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="montant" sum="Total"/>
+                                </tree>
+                            </field>
+                           
+                        </page>
+                        </notebook>
+
+                </sheet>
+               </form>
+			</field>
+	    </record>
+
+
+        <record model="ir.actions.act_window" id="action_ostation_lignevente">
+            <field name="name">Ligne vente</field>
+            <field name="res_model">ostation.lignevente</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'default_idshift':active_id}</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="ostation_lignevente_form"/>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face"> Ajouter une ligne de vente
+            </p>
+            </field>
+        </record> 
+
+ <!--#######  fin lignevente ########-->
+
+ <!--#######  fin journee ########-->
+        <!-- Formulaires  Shifts -->
+        <record id="ostation_shift_form" model="ir.ui.view">
+	         <field name="name">ostation.shift.form</field>
+             <field name="model">ostation.shift</field>
+             <field name="arch" type="xml">
+	         <form string="Shifts" version="7.0">
+                <header>
+                    <button name="valider" type="object" string="Valider le Shift" class="btn-primary" states="brouillon"/>
+                    <button name="retour" type="object" string="Mettre en brouillon" class="btn-primary" attrs="{'invisible': [('state', '!=', 'valide')]}" groups="ostation.group_ostation_admin"/>
+                    <button name="annuler" type="object" string="Annuler" class="btn-primary" states="valide" groups="ostation.group_ostation_admin"/>
+					<field name="state" widget="statusbar" statusbar_visible="brouillon,valide,annuler"/>
+                    <field name="etatversementbanque" widget="statusbar" statusbar_visible="nonverse,verse"/>
+				</header>
+                <sheet >
+                    <group>
+                        <group >
+                            <field name="idstation" invisible="1"/>
+                            <field name="name" readonly="1"/>
+                            <field name="date" attrs="{'readonly': [('state', '!=', 'brouillon')]}"/>
+                            <field name="idtypeshift" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                           
+                        </group>
+                        <group >
+                            <field name="montantcarburant" />
+                            <field name="montantlubrifiant" />
+                            <field name="montantconsignegaz" />
+                            <field name="montantrechargegaz" />
+                            <field name="montantsolaire" />
+                            <field name="montantaccessoire" />
+                            <field name="montanttotal" />
+                            <field name="ecarttotal" />
+                        </group>
+                         <group >
+                            <button name="%(action_ostation_lignevente)d" string="+Versement pompiste" class="oe_edit_only" type="action" attrs="{'invisible': [('state', '!=', 'brouillon')]}"></button>
+                        </group>
+                    </group>
+                    <notebook>
+                        <!-- les ventes -->
+                        <page string="Vente article"> 
+                            <field name="lignevente" attrs="{'readonly': [('state', '!=', 'brouillon')]}">
+                                <tree edit="false" create="false" string="Vente article">
+                                    <field name="idemploye" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="idpompe" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="montanttotalcarburant" sum="Total"/>
+                                    <field name="montanttotallubrifiant" sum="Total"/>
+                                    <field name="montanttotalconsignegaz" sum="Total"/>
+                                    <field name="montanttotalrechargegaz" sum="Total"/>
+                                    <field name="montanttotalsolaire" sum="Total"/>
+                                    <field name="montanttotalaccessoire" sum="Total"/>
+                                    <field name="montanttotaltheorique" sum="Total"/>
+                                    <field name="montanttotalverse" sum="Total"/>
+                                    <field name="ecart" sum="Total"/>
+                                </tree>
+                            </field>
+                           
+                        </page>
+                       
+                        <!-- les Jauge -->
+                        <page string="Jaugeage"> 
+                            <field name="lignejauge" attrs="{'readonly': [('state', '!=', 'brouillon')]}">
+                                <tree editable="bottom" string="Jaugeage">
+                                    <field name="idcuve" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="jaugedebut" />
+                                    <field name="jaugefin" />
+                                    <field name="ecart" />
+                                </tree>
+                            </field>
+                        </page>
+
+                        <!-- Consom. gros clients -->
+                        <page string="Consom. gros clients"> 
+                            <field name="lignerecapgrosclient" attrs="{'readonly': [('state', '!=', 'brouillon')]}">
+                                <tree editable="bottom" string="Consom. gros clients">
+                                    <field name="idclient" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="idchauffeur" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="idarticle" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="idtypepaiement" />
+                                    <field name="nbons" />
+                                    <field name="quantite" />
+                                    <field name="prixunitaire" />
+                                    <field name="montant"  sum="Total"/>
+                                 </tree>
+                            </field>
+                        </page>
+                           <!-- Consommation interne -->
+                         <page string="Consommation interne"> 
+                            <field name="ligneconsointerne" attrs="{'readonly': [('state', '!=', 'brouillon')]}">
+                                <tree editable="bottom" string="Consommation interne">
+                                    <field name="date" />
+                                    <field name="name" />
+                                    <field name="idemploye" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="idpompe" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="idpistolet" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="idarticle" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="quantite" />
+                                    <field name="prixunitaire" />
+                                    <field name="montant"  sum="Total"/>
+                                 </tree>
+                            </field>
+                        </page>
+
+                         <!-- Notation employe -->
+                        <page string="Notation employé"> 
+                            <field name="lignenotationemploye" attrs="{'readonly': [('state', '!=', 'brouillon')]}">
+                                <tree editable="bottom" string="Notation employé">
+                                    <field name="idemploye" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="name" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="note" />
+                                 </tree>
+                            </field>
+                        </page>
+                         <!-- rebus de stock -->
+                        <page string="Rebus de stock"> 
+                            <field name="lignerebusstock" attrs="{'readonly': [('state', '!=', 'brouillon')]}">
+                                <tree editable="bottom" string="Rebus de stock">
+                                    <field name="date" />
+                                    <field name="idpompe" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="idcuve" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="idpistolet" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="idarticle" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                                    <field name="quantite" />
+                                    <field name="motif" />
+                                 </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                
+				
+                </sheet>
+               </form>
+			</field>
+	    </record>
+
+         <!--  Shifts -->
+        <record id="ostation_shift_tree" model="ir.ui.view">
+            <field name="name">ostation.shift.tree</field>
+            <field name="model">ostation.shift</field>
+            <field name="arch" type="xml">
+                <tree string="Shifts">
+                    <field name="date" />
+                    <field name="name" />
+                    <field name="montantcarburant" />
+                    <field name="montantlubrifiant" />
+                    <field name="montantconsignegaz" />
+                    <field name="montantrechargegaz" />
+                    <field name="montantsolaire" />
+                    <field name="montantaccessoire" />
+                    <field name="montanttotaltheorique" />
+                    <field name="montanttotal" />
+                    <field name="ecarttotal" />
+                    <field name="state" />
+                    <field name="etatversementbanque" />
+                 </tree>
+            </field>
+        </record>
+
+        <record id="ostation_shift_search" model="ir.ui.view">
+            <field name="name">ostation.shift.search</field>
+            <field name="model">ostation.shift</field>
+            <field name="arch" type="xml">
+                <search string="Shifts">
+                    <field name="name" />
+                    <field name="montantcarburant" />
+                    <field name="montantlubrifiant" />
+                    <field name="montantconsignegaz" />
+                    <field name="montantrechargegaz" />
+                    <field name="montantsolaire" />
+                    <field name="montantaccessoire" />
+                    <field name="montanttotaltheorique" />
+                    <field name="montanttotal" />
+                    <field name="ecarttotal" />
+                    <field name="state" />
+                 </search>
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="action_ostation_shift">
+            <field name="name">Shift</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
+            <field name="res_model">ostation.shift</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ostation_shift_tree"/>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                    
+                    </p>
+            </field>
+        </record>
+
+        <!-- fin shift  -->
+
+
+        <!-- Approvisionnement Global  -->
+        <!-- Formulaires  Approvisionnement -->
+        <record id="ostation_appro_form" model="ir.ui.view">
+	         <field name="name">ostation.appro.form</field>
+             <field name="model">ostation.appro</field>
+             <field name="arch" type="xml">
+	         <form string="Approvisionnement" version="7.0">
+                <header>
+                    <button name="valider" type="object" string="Valider l'approvisionnement" class="btn-primary" states="brouillon"/>
+                    <button name="retour" type="object" string="Mettre en brouillon" class="btn-primary" attrs="{'invisible': [('state', '!=', 'valide')]}" groups="ostation.group_ostation_admin"/>
+                    <button name="annuler" type="object" string="Annuler" class="btn-primary" states="valide" groups="ostation.group_ostation_admin"/>
+					<field name="state" widget="statusbar" statusbar_visible="brouillon,valide,annuler"/>
+				</header>
+                <sheet >
+                    <group>
+                        <group >
+                            <field name="idstation" />
+                            <field name="name" readonly="1"/>
+                            <field name="date" attrs="{'readonly': [('state', '!=', 'brouillon')]}" />
+                            <field name="idshift" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}" domain="[('state','=','brouillon')]"/>
+                            <field name="idemploye" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                           
+                        </group>
+                        <group >
+                            <field name="idsociete" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                             <field name="idcamion" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                            <field name="idchauffeur" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                           
+                        </group>
+                        
+                    </group>
+                    <notebook>
+                        <!-- les ventes -->
+                        <page string="Détails Approvisionnements"> 
+                            <field name="ligneappro" attrs="{'readonly': [('state', '!=', 'brouillon')]}">
+                                <tree editable="bottom" string="Détails Approvisionnements">
+                                    <field name="categoriearticle" invisible="1"/>
+                                    <field name="idcuve"  />
+                                   <field name="idarticle"  />
+                                    <field name="compartiment" attrs="{'invisible': [('categoriearticle', '!=', 'carburant')]}"/>
+                                    
+                                    <field name="quantitecommander"  sum="Total"/>
+                                    <field name="quantitelivrer" sum="Total" />
+                                    <!-- <field name="quantiteretourgaz" attrs="{'invisible': [('categoriearticle', '!=', 'gaz')]}"/> -->
+                                    <field name="ecart" sum="Total" readonly='1'/>
+                                    <field name="densitesonabhy" />
+                                    <field name="densitestation" />
+                                    <field name="ecartdensite" />
+                                </tree>
+                            </field>
+                           
+                        </page>
+                    
+                    </notebook>
+
+                </sheet>
+               </form>
+			</field>
+	    </record>
+
+        <record id="ostation_appro_tree" model="ir.ui.view">
+            <field name="name">ostation.appro.tree</field>
+            <field name="model">ostation.appro</field>
+            <field name="arch" type="xml">
+                <tree string="Approvisionnement">
+                    <field name="name"/>
+                            <field name="idstation" />
+                            <field name="date" />
+                            <field name="idshift"/>
+                            <field name="idemploye" />
+                           <field name="idcamion" />
+                            <field name="idchauffeur" />
+                            <field name="state" />
+                 </tree>
+            </field>
+        </record>
+
+        <record id="ostation_appro_search" model="ir.ui.view">
+            <field name="name">ostation.appro.search</field>
+            <field name="model">ostation.appro</field>
+            <field name="arch" type="xml">
+                <search string="Approvisionnement">
+                    <field name="idstation" />
+                            <field name="date" />
+                            <field name="idshift"/>
+                            <field name="idemploye" />
+                            <field name="idcamion" />
+                            <field name="idchauffeur" />
+                            <field name="idsociete" />
+                            <field name="state" />
+                 </search>
+            </field>
+        </record>
+
+        
+
+        <record model="ir.actions.act_window" id="action_ostation_appro">
+            <field name="name">Approvisionnement</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
+            <field name="res_model">ostation.appro</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ostation_appro_tree"/>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                    
+                    </p>
+            </field>
+        </record>
+        <!-- fin Approvisionnement Global  -->
+
+        <!-- Formulaires  Depense -->
+        <record id="ostation_depense_form" model="ir.ui.view">
+	         <field name="name">ostation.depense.form</field>
+             <field name="model">ostation.depense</field>
+             <field name="arch" type="xml">
+	         <form string="Depense" version="7.0">
+                <header>
+					<field name="state" widget="statusbar" statusbar_visible="brouillon,valide,annuler"/>
+				</header>
+                <sheet >
+                    <group>
+                        <group >
+                            <field name="name" />
+                            <field name="idshift" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                            <field name="montant" />
+                            <field name="date" />
+                            <field name="description" />
+                        </group>
+                        <group >
+                            
+                        </group>
+                    </group>
+
+                </sheet>
+               </form>
+			</field>
+	    </record>
+
+         <!--  Depense -->
+        <record id="ostation_depense_tree" model="ir.ui.view">
+            <field name="name">ostation.depense.tree</field>
+            <field name="model">ostation.depense</field>
+            <field name="arch" type="xml">
+                <tree string="Depense">
+                    <field name="name" />
+                    <field name="idshift" />
+                    <field name="montant" />
+                    <field name="date" />
+                    <field name="state" />
+                 </tree>
+            </field>
+        </record>
+
+        <record id="ostation_depense_search" model="ir.ui.view">
+            <field name="name">ostation.depense.search</field>
+            <field name="model">ostation.depense</field>
+            <field name="arch" type="xml">
+                <search string="Depense">
+                    <field name="name" />
+                    <field name="idshift" />
+                    <field name="montant" />
+                    <field name="date" />
+                    <field name="state" />
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_depense">
+            <field name="name">Depense</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
+            <field name="res_model">ostation.depense</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ostation_depense_tree"/>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                    
+                    </p>
+            </field>
+        </record>
+
+        <!-- Formulaires  Versement Banque -->
+        <record id="ostation_versementbanque_form" model="ir.ui.view">
+	         <field name="name">ostation.versementbanque.form</field>
+             <field name="model">ostation.versementbanque</field>
+             <field name="arch" type="xml">
+	         <form string="Versement Banque" version="7.0">
+                <header>
+                    <button name="valider" type="object" string="Valider versement" class="btn-primary" states="brouillon"/>
+                    <button name="retour" type="object" string="Mettre en brouillon" class="btn-primary" attrs="{'invisible': [('state', '!=', 'valide')]}" groups="ostation.group_ostation_admin"/>
+                    <button name="annuler" type="object" string="Annuler" class="btn-primary" states="valide" groups="ostation.group_ostation_admin"/>
+					<field name="state" widget="statusbar" statusbar_visible="brouillon,valide,annuler"/>
+				</header>
+                <sheet >
+                    <group>
+                        <group >
+                            <field name="date" attrs="{'readonly': [('state', '!=', 'brouillon')]}"/>
+                            <field name="idbanque" attrs="{'readonly': [('state', '!=', 'brouillon')]}"/>
+                            <field name="idemploye" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                            <field name="name" attrs="{'readonly': [('state', '!=', 'brouillon')]}"/>
+                            <field name="shiftids" attrs="{'readonly': [('state', '!=', 'brouillon')]}" widget="many2many_tags" options="{'no_create_edit': True}" domain="[('state','=','valide'),('etatversementbanque','=','nonverse')]"/>
+                            <field name="montantshifts" attrs="{'readonly': [('state', '!=', 'brouillon')]}" />
+                            <field name="frais" attrs="{'readonly': [('state', '!=', 'brouillon')]}"/>
+                            <field name="montant" attrs="{'readonly': [('state', '!=', 'brouillon')]}"/>
+                            <field name="commentaire" attrs="{'readonly': [('state', '!=', 'brouillon')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+               </form>
+			</field>
+	    </record>
+
+         <!--  Versement Banque -->
+        <record id="ostation_versementbanque_tree" model="ir.ui.view">
+            <field name="name">ostation.versementbanque.tree</field>
+            <field name="model">ostation.versementbanque</field>
+            <field name="arch" type="xml">
+                <tree string="Versement Banque">
+                    <field name="idstation" />
+                     <field name="date"/>
+                    <field name="name" />
+                    <field name="montantshifts"/>
+                    <field name="frais"/>
+                    <field name="montant"/>
+                    <field name="idbanque"/>
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="ostation_versementbanque_search" model="ir.ui.view">
+            <field name="name">ostation.versementbanque.search</field>
+            <field name="model">ostation.versementbanque</field>
+            <field name="arch" type="xml">
+                <search string="Versement Banque">
+                    <field name="idstation" />
+                    <field name="name" />
+                    <field name="date"/>
+                    <field name="montant"/>
+                    <field name="idbanque"/>
+                    <field name="state" />
+                 </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_versementbanque">
+            <field name="name">Versement Banque</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
+            <field name="res_model">ostation.versementbanque</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ostation_versementbanque_tree"/>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                    
+                    </p>
+            </field>
+        </record>
+
+        <!-- Formulaires  Jauge -->
+        <record id="ostation_jauge_form" model="ir.ui.view">
+	         <field name="name">ostation.jauge.form</field>
+             <field name="model">ostation.jauge</field>
+             <field name="arch" type="xml">
+	         <form string="Jauge" version="7.0">
+                <header>
+					<field name="state" widget="statusbar" statusbar_visible="brouillon,valide,annuler"/>
+				</header>
+                <sheet >
+                    <group>
+                        <group >
+                            <field name="idshift" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                            <!-- <field name="idcuve" /> -->
+                        </group>
+                        <group >
+                            <field name="jaugedebut" />
+                            <field name="jaugefin" />
+                           
+                        </group>
+                    </group>
+                
+				
+                </sheet>
+               </form>
+			</field>
+	    </record>
+
+         <!-- Jauge -->
+        <record id="ostation_jauge_tree" model="ir.ui.view">
+            <field name="name">ostation.jauge.tree</field>
+            <field name="model">ostation.jauge</field>
+            <field name="arch" type="xml">
+                <tree string="Jauge">
+                        <field name="jaugedebut" />
+                        <field name="jaugefin" />
+                        <field name="state" />
+                 </tree>
+            </field>
+        </record>
+
+        <record id="ostation_jauge_search" model="ir.ui.view">
+            <field name="name">ostation.jauge.search</field>
+            <field name="model">ostation.jauge</field>
+            <field name="arch" type="xml">
+                <search string="Jauge">
+                        <field name="jaugedebut" />
+                        <field name="jaugefin" />
+                        <field name="state" />
+                 </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_jauge">
+            <field name="name">Jauge</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
+            <field name="res_model">ostation.jauge</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ostation_jauge_tree"/>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                    
+                    </p>
+            </field>
+        </record>
+
+        <!-- Formulaires  Notation employé -->
+        <record id="ostation_notationemploye_form" model="ir.ui.view">
+	         <field name="name">ostation.notationemploye.form</field>
+             <field name="model">ostation.notationemploye</field>
+             <field name="arch" type="xml">
+	         <form string="Notation employé" version="7.0">
+                <header>
+                    <button name="valider" type="object" string="Valider Note" class="btn-primary" states="brouillon"/>
+                    <button name="retour" type="object" string="Mettre en brouillon" class="btn-primary" attrs="{'invisible': [('state', '!=', 'valide')]}"/>
+                    <button name="annuler" type="object" string="Annuler" class="btn-primary" states="valide"/>
+					<field name="state" widget="statusbar" statusbar_visible="brouillon,valide,annuler"/>
+				</header>
+                <sheet >
+                    <group>
+                        <group >
+                            <field name="idshift" attrs="{'readonly': [('state', '!=', 'brouillon')]}" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                            <field name="note" attrs="{'readonly': [('state', '!=', 'brouillon')]}"/>
+                            <field name="idemploye" attrs="{'readonly': [('state', '!=', 'brouillon')]}"/>
+                            <!-- <field name="note" /> -->
+                        </group>
+                        <group >
+                            
+                        </group>
+                    </group>
+                
+				
+                </sheet>
+               </form>
+			</field>
+	    </record>
+
+         <!-- Notation employé -->
+        <record id="ostation_notationemploye_tree" model="ir.ui.view">
+            <field name="name">ostation.notationemploye.tree</field>
+            <field name="model">ostation.notationemploye</field>
+            <field name="arch" type="xml">
+                <tree string="Notation employé">
+                    <field name="idshift" />
+                    <field name="note" />
+                    <field name="state" />
+                 </tree>
+            </field>
+        </record>
+
+        <record id="ostation_notationemploye_search" model="ir.ui.view">
+            <field name="name">ostation.notationemploye.search</field>
+            <field name="model">ostation.notationemploye</field>
+            <field name="arch" type="xml">
+                <search string="Notation employé">
+                    <field name="idshift" />
+                    <field name="note" />
+                    <field name="state" />
+                 </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_notationemploye">
+            <field name="name">Notation employé</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
+            <field name="res_model">ostation.notationemploye</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ostation_notationemploye_tree"/>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                    
+                    </p>
+            </field>
+        </record>
+
+        <!-- Formulaires  Charges récurentes -->
+        <record id="ostation_chargerecurente_form" model="ir.ui.view">
+	         <field name="name">ostation.chargerecurente.form</field>
+             <field name="model">ostation.chargerecurente</field>
+             <field name="arch" type="xml">
+	         <form string="Charges récurrentes" version="7.0">
+                <header>
+                    <button name="soumettre" type="object" string="Soumettre" class="btn-primary" states="brouillon"/>
+                    <button name="traiter" type="object" string="Valider traitement" class="btn-primary" states="atraite"/>
+                    <button name="retour" type="object" string="Remettre en brouillon" class="btn-primary" states="atraite" />
+                    <button name="annuler" type="object" string="Annuler" class="btn-primary" states="traite" groups="ostation.group_ostation_admin"/>
+					<field name="state" widget="statusbar" statusbar_visible="brouillon,atraite,traite,annuler"/>
+				</header>
+                <sheet >
+                    <group>
+                        <group >
+                            <field name="idstation" invisible="1"/>
+                            <field name="date" />
+                            <field name="delai" />
+                            <field name="name" />
+                            <field name="reference" />
+                            <field name="montant" />
+                        </group>
+                        <group >
+                            
+                        </group>
+                    </group>
+                
+				
+                </sheet>
+               </form>
+			</field>
+	    </record>
+
+        <!-- Charges récurentes -->
+        <record id="ostation_chargerecurente_tree" model="ir.ui.view">
+            <field name="name">ostation.chargerecurente.tree</field>
+            <field name="model">ostation.chargerecurente</field>
+            <field name="arch" type="xml">
+                <tree string="Charges récurentes">
+                    <field name="idstation" />
+                    <field name="date" />
+                    <field name="delai" />
+                    <field name="name" />
+                    <field name="reference" />
+                    <field name="montant" />
+                    <field name="state" />
+                 </tree>
+            </field>
+        </record>
+
+        <record id="ostation_chargerecurente_search" model="ir.ui.view">
+            <field name="name">ostation.chargerecurente.search</field>
+            <field name="model">ostation.chargerecurente</field>
+            <field name="arch" type="xml">
+                <search string="Charges récurentes">
+                   <field name="idstation" />
+                    <field name="date" />
+                    <field name="delai" />
+                    <field name="name" />
+                    <field name="reference" />
+                    <field name="montant" />
+                    <field name="state" />
+                 </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_chargerecurente">
+            <field name="name">Charges récurentes</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
+            <field name="res_model">ostation.chargerecurente</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ostation_chargerecurente_tree"/>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                    Ajouter une charge recurente...
+                    </p>
+            </field>
+        </record>
+        <!-- Formulaires  Règlement client -->
+        <!-- <record id="ostation_reglementclient_form" model="ir.ui.view">
+	         <field name="name">ostation.reglementclient.form</field>
+             <field name="model">ostation.reglementclient</field>
+             <field name="arch" type="xml">
+	         <form string="Règlement client" version="7.0">
+                <header>
+					<field name="state" widget="statusbar" statusbar_visible="brouillon,valide,annuler"/>
+				</header>
+                <sheet >
+                    <group>
+                        <group >
+                            <field name="name" />
+                            <field name="date" />
+                            <field name="montant" />
+                        </group>
+                        <group >
+                            
+                        </group>
+                    </group>
+                
+				
+                </sheet>
+               </form>
+			</field>
+	    </record> -->
+
+         <!-- Règlement client
+        <record id="ostation_reglementclient_tree" model="ir.ui.view">
+            <field name="name">ostation.reglementclient.tree</field>
+            <field name="model">ostation.reglementclient</field>
+            <field name="arch" type="xml">
+                <tree string="Règlement client">
+                    <field name="name" />
+                    <field name="date" />
+                    <field name="montant" />
+                    <field name="state" />
+                 </tree>
+            </field>
+        </record>
+
+        <record id="ostation_reglementclient_search" model="ir.ui.view">
+            <field name="name">ostation.reglementclient.search</field>
+            <field name="model">ostation.reglementclient</field>
+            <field name="arch" type="xml">
+                <search string="Règlement client">
+                    <field name="name" />
+                    <field name="date" />
+                    <field name="montant" />
+                    <field name="state" />
+                 </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_reglementclient">
+            <field name="name">Règlement client</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ostation.reglementclient</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ostation_reglementclient_tree"/>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                    
+                    </p>
+            </field>
+        </record> -->
+        
+       
+
+    </data>
+    
+</odoo>

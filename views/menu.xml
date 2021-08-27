@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Menus  -->
+        <menuitem id="ostation" name="APC OSTATION" sequence="150" web_icon="ostation,static/description/icon.ico"/>
+        <menuitem id="ostation_shift" name="Shift" parent="ostation"  sequence="10" action="action_ostation_shift"/>
+        <menuitem id="ostation_versement_bank" name="Versement banque" parent="ostation"  sequence="11" action="action_ostation_versementbanque"/>
+        <menuitem id="ostation_appro" name="Approvisionnement" parent="ostation"  sequence="11" action="action_ostation_appro"/>
+        <menuitem id="ostation_depemse" name="Mini-caisse" parent="ostation"  sequence="12" action="action_ostation_minicaisse"/>
+        <menuitem id="ostation_charges" name="Charges" parent="ostation"  sequence="13" action="action_ostation_chargerecurente"/>
+        
+        <menuitem id="ostation_report" name="Rapports" parent="ostation" sequence="180" />
+            <menuitem id="ostation_etat" name="Etats" parent="ostation_report"  sequence="1" action="action_ostation_etat"/>
+            <menuitem id="ostation_mouvementstock" name="Mouvement de stock" parent="ostation_report"  sequence="5" action="action_ostation_mouvementstock"/>
+            <menuitem id="ostation_ecartpompiste" name="Ecart pompiste" parent="ostation_report"  sequence="6" action="action_ostation_ecartpompiste"/>
+        
+        <menuitem id="ostation_parametre" name="Paramètres" parent="ostation" sequence="5" />
+            <menuitem id="ostation_station" name="Station" parent="ostation_parametre"  sequence="5" action="action_ostation_station"/>
+            <menuitem id="ostation_typeshift" name="Type shift" parent="ostation_parametre"  sequence="5" action="action_ostation_typeshift"/>
+            <menuitem id="ostation_pompe" name="Pompe" parent="ostation_parametre"  sequence="5" action="action_ostation_pompe"/>
+            <menuitem id="ostation_cuve" name="Cuve" parent="ostation_parametre"  sequence="5" action="action_ostation_cuve"/>
+            <menuitem id="ostation_article" name="Article" parent="ostation_parametre"  sequence="5" action="action_ostation_article"/>
+            <menuitem id="ostation_client" name="Client" parent="ostation_parametre"  sequence="5" action="action_ostation_client"/>
+            
+            <menuitem id="ostation_employe" name="Employé" parent="ostation_parametre"  sequence="5" action="action_ostation_employe"/>
+            <menuitem id="ostation_modepaiement" name="Mode paiement" parent="ostation_parametre"  sequence="5" action="action_ostation_typepaiement"/>
+            <menuitem id="ostation_societe" name="Société de livraison" parent="ostation_parametre"  sequence="5" action="action_ostation_societe"/>
+            <!-- <menuitem id="ostation_camion" name="Camion" parent="ostation_parametre"  sequence="5" action="action_ostation_camion"/> --> 
+             <!-- <menuitem id="ostation_chauffeur" name="Chauffeur" parent="ostation_parametre"  sequence="5" action="action_ostation_chauffeur"/> -->
+            <menuitem id="ostation_banque" name="Banque" parent="ostation_parametre"  sequence="5" action="action_ostation_banque"/>
+        
+        <menuitem id="ostation_categorie" name="Catégories" parent="ostation_parametre" sequence="200" />
+            <menuitem id="ostation_categ_employe" name="Categorie employé" parent="ostation_categorie"  sequence="5" action="action_ostation_categorieemploye"/>
+            <menuitem id="ostation_categ_article" name="Categorie article" parent="ostation_categorie"  sequence="5" action="action_ostation_categoriearticle"/>
+            <menuitem id="ostation_categ_client" name="Categorie client" parent="ostation_categorie"  sequence="5" action="action_ostation_categorieclient"/>
+            <menuitem id="ostation_categ_depense" name="Categorie depense" parent="ostation_categorie"  sequence="5" action="action_ostation_categoriedepense"/>
+     </data>
+
+</odoo>

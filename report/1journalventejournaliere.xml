@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/ostation/static/src/css/ostation.css"/>
+			<link rel='stylesheet' href="/ostation/static/src/css/sodigaz1.css"/>
+		</xpath>
+    </template>
+
+    <template id='1ventejournalier'>
+        <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="30"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+            <t t-call="web.internal_layout">
+                <div class="page">
+                       
+                       
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>ETAT DU <span t-esc="datetime.datetime.now().strftime('%d/%m/%Y')"/>: <strong>JOURNAL DE VENTE JOURNALIERE/PERIODE</strong></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <h6 class="mb-3">DU:</h6>
+                                    <div>
+                                        <strong><span t-esc="data['debut']" /></strong>
+                                    </div>
+                                   
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="mb-3">AU:</h6>
+                                    <div>
+                                        <strong><span t-esc="data['fin']" /></strong>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            
+                            <t t-set="col" t-value="0" />
+                            <div class="table-responsive-sm">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <t t-foreach="cuves" t-as="cuve">
+                                            <t t-set="test" t-value="cuve['pistolet']" />
+                                            <span t-esc="len(test)"/>
+                                            <t t-set="col" t-value="col + len(test)" />
+                                        </t> 
+                                        <t t-set="col" t-value="col + 1" />
+                                        <span t-esc="col"/>
+                                        <tr>
+                                            <th>SUPER 91</th>
+                                        </tr>
+                                     </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="table-dark"></td>
+                                            <t t-foreach="ouvertures_su" t-as="cuve">
+                                                <td class="center"><span t-esc="cuve['cuve']" /></td>
+                                            </t>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-dark"></td>
+                                            <t t-foreach="ouvertures_su" t-as="p">
+                                                <!-- <t t-set="test" t-value="cuve['pistolet']" /> -->
+                                                <!-- <t t-foreach="test" t-as="t"> -->
+                                                    <td align="center"><span t-esc="p['nompistolet']" /></td>
+                                                <!-- </t>  -->
+                                            </t>
+                                        </tr>
+                                       
+                                        <tr>
+                                            <td>INDEX FERMETURE</td>
+                                            <t t-foreach="ouvertures_su" t-as="o">
+                                                <td align="right"><span t-esc="'{:,.2f}'.format(o['indexfin']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                        <tr>
+                                            <td>INDEX OUVERTURE</td>
+                                            <t t-foreach="ouvertures_su" t-as="o">
+                                                <td align="right"><span t-esc="'{:,.2f}'.format(o['indexdebut']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                        <tr>
+                                            <td>SORTIE</td>
+                                             <t t-foreach="ouvertures_su" t-as="o">
+                                                <td align="right" ><span t-esc="'{:,.2f}'.format(o['sortie']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                        <tr>
+                                            <td>RETOUR CUVE</td>
+                                             <t t-foreach="ouvertures_su" t-as="o">
+                                                <td align="right"><span t-esc="'{:,.2f}'.format(o['retourcuve']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                        <tr>
+                                            <td>VENTE EN QUANTITE</td>
+                                            <t t-foreach="ouvertures_su" t-as="o">
+                                                <td align="right" ><span t-esc="'{:,.2f}'.format(o['qtevaleur']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                        <tr>
+                                            <td>VENTE/VALEUR</td>
+                                            <t t-foreach="ouvertures_su" t-as="o">
+                                                <td align="right" ><span t-esc="'{:,.2f}'.format(o['ventevaleur']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+                <div class="page">
+                       
+                       
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>ETAT DU <span t-esc="datetime.datetime.now().strftime('%d/%m/%Y')"/>: <strong>JOURNAL DE VENTE JOURNALIERE/PERIODE</strong></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <h6 class="mb-3">DU:</h6>
+                                    <div>
+                                        <strong><span /></strong>
+                                    </div>
+                                   
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="mb-3">AU:</h6>
+                                    <div>
+                                        <strong><span /></strong>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            
+                            <t t-set="col" t-value="0" />
+                            <div class="table-responsive-sm">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <t t-foreach="cuves" t-as="cuve">
+                                            <t t-set="test" t-value="cuve['pistolet']" />
+                                            <span t-esc="len(test)"/>
+                                            <t t-set="col" t-value="col + len(test)" />
+                                        </t> 
+                                        <t t-set="col" t-value="col + 1" />
+                                        <span t-esc="col"/>
+                                        <tr>
+                                            <th >GASOIL</th>
+                                        </tr>
+                                     </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="table-dark"></td>
+                                            <t t-foreach="ouvertures_ga" t-as="cuve">
+                                                <td align="center"><span t-esc="cuve['cuve']" /></td>
+                                            </t>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-dark"></td>
+                                            <t t-foreach="ouvertures_ga" t-as="p">
+                                                <!-- <t t-set="test" t-value="cuve['pistolet']" /> -->
+                                                <!-- <t t-foreach="test" t-as="t"> -->
+                                                    <td align="center"><span t-esc="p['nompistolet']" /></td>
+                                                <!-- </t>  -->
+                                            </t>
+                                        </tr>
+                                       
+                                        <tr>
+                                            <td>INDEX FERMETURE</td>
+                                            <t t-foreach="ouvertures_ga" t-as="o">
+                                                <td align="right"><span t-esc="'{:,.2f}'.format(o['indexfin']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                        <tr>
+                                            <td>INDEX OUVERTURE</td>
+                                            <t t-foreach="ouvertures_ga" t-as="o">
+                                                <td align="right"><span t-esc="'{:,.2f}'.format(o['indexdebut']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                        <tr>
+                                            <td>SORTIE</td>
+                                             <t t-foreach="ouvertures_ga" t-as="o">
+                                                <td align="right"><span t-esc="'{:,.2f}'.format(o['sortie']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                        <tr>
+                                            <td>RETOUR CUVE</td>
+                                             <t t-foreach="ouvertures_ga" t-as="o">
+                                                <td align="right"><span t-esc="'{:,.2f}'.format(o['retourcuve']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                        <tr>
+                                            <td>VENTE EN QUANTITE</td>
+                                            <t t-foreach="ouvertures_ga" t-as="o">
+                                                <td align="right"><span t-esc="'{:,.2f}'.format(o['qtevaleur']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                        <tr>
+                                            <td>VENTE/VALEUR</td>
+                                            <t t-foreach="ouvertures_ga" t-as="o">
+                                                <td align="right"><span t-esc="'{:,.2f}'.format(o['ventevaleur']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </t> 
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+            </t>
+           
+        </t>
+    </template>
+
+
+     
+
+</odoo>

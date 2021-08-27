@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/ostation/static/src/css/ostation.css"/>
+		</xpath>
+    </template>
+    <template id="recapshift">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="2"/>
+        <t t-set="data_report_margin_left" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.basic_layout">
+                
+                <div class="page" style="font-family:Arial, Helvetica, sans-serif; margin-top:20px; padding-top:20px;">
+                    <div>
+                        <h3> <strong> SODIGAZ APC - <span t-esc="o.idstation.name"/></strong></h3>
+                        <div><strong>Etat</strong>: <span t-esc="o.state" /></div>
+                    </div>
+                    <hr/>
+                    <div class="bc">SHIFT: <span t-esc="o.name" /></div>
+
+                    <div >
+                        <table class="table table-bordered esp" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 16%">Emplyé</th>
+                                    <th style="width: 10%">Pompe</th>
+                                    <th style="width: 10%">T. Carburant</th>
+                                    <th style="width: 10%">T. Lubrifiant</th>
+                                    <th style="width: 10%">T. Gaz recharge</th>
+                                    <th style="width: 10%">T. Gaz Consigne</th>
+                                    <th style="width: 10%">T. Solaire</th>
+                                    <th style="width: 10%">T. Accessoire</th>
+                                    <th style="width: 12%">T Theorique</th>
+                                    <th style="width: 12%">T versé</th>
+                                    <th style="width: 10%">T.Ecart</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.lignevente" t-as="oline">
+                                    <tr>
+                                        <td><h4><span t-esc="oline.idemploye.name"/></h4> </td>
+                                        <td><h4><span t-esc="oline.idpompe.name"/></h4> </td>
+                                        <td><h4><span t-esc="'{:,.0f}'.format(oline.montanttotalcarburant).replace(',', ' ').replace('.', ',')"/></h4> </td>
+                                        <td><h4><span t-esc="'{:,.0f}'.format(oline.montanttotallubrifiant).replace(',', ' ').replace('.', ',')"/></h4> </td>
+                                        <td><h4><span t-esc="'{:,.0f}'.format(oline.montantrechargegaz).replace(',', ' ').replace('.', ',')"/></h4> </td>
+                                        <td><h4><span t-esc="'{:,.0f}'.format(oline.montantconsignegaz).replace(',', ' ').replace('.', ',')"/></h4> </td>
+                                        <td><h4><span t-esc="'{:,.0f}'.format(oline.montantsolaire).replace(',', ' ').replace('.', ',')"/></h4> </td>
+                                        <td><h4><span t-esc="'{:,.0f}'.format(oline.montanttotalaccessoire).replace(',', ' ').replace('.', ',')"/></h4> </td>
+                                        <td><h4><span t-esc="'{:,.0f}'.format(oline.montanttotaltheorique).replace(',', ' ').replace('.', ',')"/></h4> </td>
+                                        <td><h4><span t-esc="'{:,.0f}'.format(oline.montanttotalverse).replace(',', ' ').replace('.', ',')"/></h4> </td>
+                                        <td><h4><span t-esc="'{:,.0f}'.format(oline.ecart).replace(',', ' ').replace('.', ',')"/></h4> </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                       
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="recap">
+                        
+                        <div class="recapd"> 
+                            <div class="resp"> 
+                                <strong>GERANT(E)</strong>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </t>
+        </t>
+    </t>
+    </template>
+</odoo>

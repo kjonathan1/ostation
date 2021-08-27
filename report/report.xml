@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+        <record id="paysage" model="report.paperformat">
+            <field name="name">A4 Paysage</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">3</field>
+            <field name="dpi">80</field>
+        </record>
+
+    <record id="paysage" model="report.paperformat">
+        <field name="name">A4 Paysage</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">23</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">80</field>
+    </record>
+
+    <report 
+            id="reportshist_id"
+            model="ostation.shift"
+            string="Report Shift"
+            report_type="qweb-pdf"
+            name="ostation.reportshift_template"
+            file="ostation.reportshift_template"
+            paperformat="ostation.paysage"
+    />
+     <report 
+            id="reportappro_id"
+            model="ostation.appro"
+            string="Report Appro"
+            report_type="qweb-pdf"
+            name="ostation.reportappro_template"
+            file="ostation.reportappro_template"
+    />
+
+		<report 
+            id="report_shist"
+            model="ostation.shift"
+            string="Recap. Shift"
+            report_type="qweb-pdf"
+            name="ostation.recapshift"
+            file="ostation.recapshift"
+        />
+
+        <report 
+            id="report_shist_list"
+            model="ostation.shift"
+            string="Recap. Shift Liste"
+            report_type="qweb-pdf"
+            name="ostation.recapshiftlist"
+            file="ostation.recapshiftlist"
+        />
+        <report 
+            id="reportarticle"
+            model="ostation.article"
+            string="Etat article"
+            report_type="qweb-pdf"
+            name="ostation.reportarticle"
+            file="ostation.reportarticle"
+        />
+
+        <report 
+            id="report_cuve"
+            model="ostation.cuve"
+            string="Recap des cuves"
+            report_type="qweb-pdf"
+            name="ostation.report_cuve"
+            file="ostation.report_cuve"
+        />
+
+        <!-- construction de template -->
+        <report 
+            id="0equipejour_id"
+            model="ostation.shift"
+            string="Equipe du jour"
+            report_type="qweb-pdf"
+            name="ostation.0equipejour"
+            file="ostation.0equipejour"
+        />
+        <report 
+            id="1ventejournalier_id"
+            model="ostation.shift"
+            string="Vente journalier"
+            report_type="qweb-pdf"
+            name="ostation.1ventejournalier"
+            file="ostation.1ventejournalier"
+            paperformat="ostation.paysage"
+        />
+        <report 
+            id="2recette_id"
+            model="ostation.shift"
+            string="Recette"
+            report_type="qweb-pdf"
+            name="ostation.2recette"
+            file="ostation.2recette"
+            paperformat="ostation.paysage"
+        />
+        <report 
+            id="3mvtrechargegaz_id"
+            model="ostation.shift"
+            string="MVT recharge gaz"
+            report_type="qweb-pdf"
+            name="ostation.3mvtrechargegaz"
+            file="ostation.3mvtrechargegaz"
+            paperformat="ostation.paysage"
+        />
+        <report 
+            id="4mvtconsignegaz_id"
+            model="ostation.shift"
+            string="MVT consigne gaz"
+            report_type="qweb-pdf"
+            name="ostation.4mvtconsignegaz"
+            file="ostation.4mvtconsignegaz"
+            paperformat="ostation.paysage"
+        />
+        <report 
+            id="5mvtaccessoiregaz_id"
+            model="ostation.shift"
+            string="MVT accessoire gaz"
+            report_type="qweb-pdf"
+            name="ostation.5mvtaccessoiregaz"
+            file="ostation.5mvtaccessoiregaz"
+            paperformat="ostation.paysage"
+        />
+        <report 
+            id="6mvtsolaire_id"
+            model="ostation.shift"
+            string="MVT solaire"
+            report_type="qweb-pdf"
+            name="ostation.6mvtsolaire"
+            file="ostation.6mvtsolaire"
+            paperformat="ostation.paysage"
+        />
+        <report 
+            id="7approvisionnement_id"
+            model="ostation.shift"
+            string="Approvisionnement"
+            report_type="qweb-pdf"
+            name="ostation.7approvisionnement"
+            file="ostation.7approvisionnement"
+            paperformat="ostation.paysage"
+        />
+        <report 
+            id="8stock_id"
+            model="ostation.shift"
+            string="Stock"
+            report_type="qweb-pdf"
+            name="ostation.8stockable"
+            file="ostation.8stockable"
+            paperformat="ostation.paysage"
+        />
+        <report 
+            id="9bondecarburant_id"
+            model="ostation.shift"
+            string="Bons"
+            report_type="qweb-pdf"
+            name="ostation.9bondecarburant"
+            file="ostation.9bondecarburant"
+            paperformat="ostation.paysage"
+        />
+        <report 
+            id="10mvtlubrifiant_id"
+            model="ostation.shift"
+            string="Lubrifiant"
+            report_type="qweb-pdf"
+            name="ostation.10mvtlubrifiant"
+            file="ostation.10mvtlubrifiant"
+            paperformat="ostation.paysage"
+        />
+        <report 
+            id="11mvtsolaire_id"
+            model="ostation.shift"
+            string="Solaire"
+            report_type="qweb-pdf"
+            name="ostation.11mvtsolaire"
+            file="ostation.11mvtsolaire"
+            paperformat="ostation.paysage"
+        />
+        <report 
+            id="12global_id"
+            model="ostation.shift"
+            string="GLOBAL IMPRESSION"
+            report_type="qweb-pdf"
+            name="ostation.12global"
+            file="ostation.12global"
+            paperformat="ostation.paysage"
+        />
+		
+    </data>
+</odoo>

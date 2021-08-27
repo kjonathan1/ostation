@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/ostation/static/src/css/ostation.css"/>
+			<link rel='stylesheet' href="/ostation/static/src/css/sodigaz1.css"/>
+		</xpath>
+    </template>
+
+    <template id='7approvisionnement'>
+        <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="30"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+            <t t-call="web.internal_layout">
+                <div class="page">
+                       
+                       
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                           <h3>ETAT DU <span t-esc="datetime.datetime.now().strftime('%d/%m/%Y')"/>: <strong>APPROVISIONNEMENT</strong></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <h6 class="mb-3">DU:</h6>
+                                   <div>
+                                        <strong><span t-esc="data['debut']"/></strong>
+                                    </div>
+                                   
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="mb-3">AU:</h6>
+                                    <div>
+                                        <strong><span t-esc="data['fin']"/></strong>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+
+                            <div class="table-responsive-sm">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>DATE</th>
+                                            <th>CHAUFFEUR</th>
+                                            <th>IMMAT. VHLE</th>
+                                            <th>CPT CAMION</th>
+                                            <th>SUPER</th>
+                                            <th>GASOIL</th>
+                                            <th>COMPARTIMENT</th>
+                                            <th>TRMPERATURE</th>
+                                            <th>DENSITE CNST</th>
+                                            <th>DENSITE CNST A 15C</th>
+                                            <th>DENSITE SONABHY</th>
+                                            <th>ECARTS</th>
+                                            <th>QTITE A LIVRER</th>
+                                            <th>QTITE RECU</th>
+                                            <th>ECARTS</th>
+                                        </tr>
+                                     </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+            </t>
+           
+        </t>
+    </template>
+
+
+     
+
+</odoo>

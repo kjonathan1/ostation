@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/ostation/static/src/css/ostation.css"/>
+			<link rel='stylesheet' href="/ostation/static/src/css/sodigaz1.css"/>
+		</xpath>
+    </template>
+
+    <template id='3mvtrechargegaz'>
+        <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="30"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+            <t t-call="web.internal_layout">
+                <div class="page">
+                       
+                       
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                           <h3>ETAT DU <span t-esc="datetime.datetime.now().strftime('%d/%m/%Y')"/>: <strong>MOUVEMENTS RECHARGE GAZ</strong></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <h6 class="mb-3">DU:</h6>
+                                   <div>
+                                        <strong><span t-esc="data['debut']"/></strong>
+                                    </div>
+                                   
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="mb-3">AU:</h6>
+                                    <div>
+                                        <strong><span t-esc="data['fin']"/></strong>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+
+                            <div class="table-responsive-sm">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="7">MOUVEMENTS RECHARGE GAZ</th>
+                                            <th colspan="2">BOUTEILLES VIDES</th>
+                                        </tr>
+                                     </thead>
+                                    <tbody>
+                                        <t- t-set="ouverture" t-value="0"/> 
+                                       <t- t-set="entree" t-value="0"/> 
+                                       <t- t-set="sortie" t-value="0"/> 
+                                       <t- t-set="stockfinal" t-value="0"/> 
+                                       <t- t-set="valeurvente" t-value="0"/> 
+                                       <t- t-set="valeurstock" t-value="0"/> 
+                                       <t- t-set="bvstockfinal" t-value="0"/> 
+                                       <t- t-set="bvstockouv" t-value="0"/> 
+                                      
+                                
+                                        <tr>
+                                            <td>DESIGNATION</td>
+                                            <td align="right">Stck Ouv</td>
+                                            <td align="right">Entrée</td>
+                                            <td align="right">Ventes</td>
+                                            <td align="right">Stck Final</td>
+                                            <td align="right">Prix unitaire</td>
+                                            <td align="right">Valeurs/Vente</td>
+                                            <!-- <td class="center">Valeurs/Stock Final(6=5x4)</td> -->
+                                            <td align="right">Stck Ouv</td>
+                                            <td align="right">Stck Final</td>
+                                           
+                                        </tr>
+                                    <t t-foreach="mouvementstock" t-as="res">
+
+                                        <tr>
+                                            <td><span t-esc="res['name']"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(res['ouverture']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(res['entree']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(res['sortie']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(res['stockfinal']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(res['prix']).replace(',', ' ').replace('.', ',')"/></td>
+                                           
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(res['valeurstock']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <!-- <td><span t-esc="res['bvstockouv']"/></td> -->
+                                           
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(res['bvstockouv']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(res['bvstockfinal']).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+
+                                                <t- t-set="ouverture" t-value="ouverture+res['ouverture']"/> 
+                                                <t- t-set="entree" t-value="entree+res['entree']"/> 
+                                                <t- t-set="sortie" t-value="sortie+res['sortie']"/> 
+                                                <t- t-set="stockfinal" t-value="stockfinal+res['stockfinal']"/> 
+                                                <t- t-set="valeurvente" t-value="valeurvente+res['valeurvente']"/> 
+                                                <t- t-set="valeurstock" t-value="valeurstock+res['valeurstock']"/> 
+                                                <t- t-set="bvstockouv" t-value="bvstockouv+res['bvstockouv']"/> 
+                                                <t- t-set="bvstockfinal" t-value="bvstockfinal+res['bvstockfinal']"/> 
+                                               
+                                                
+                                    </t>
+                                        <tr>
+                                            <td>TOTAL</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(ouverture).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(entree).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(sortie).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(stockfinal).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right">-</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(valeurstock).replace(',', ' ').replace('.', ',')"/></td>
+                                            <!-- <td><span t-esc="'{:,.2f}'.format(valeurstock).replace(',', ' ').replace('.', ',')"/></td> -->
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(bvstockouv).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(bvstockfinal).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+            </t>
+           
+        </t>
+    </template>
+
+
+     
+
+</odoo>

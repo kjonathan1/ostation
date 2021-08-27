@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/ostation/static/src/css/ostation.css"/>
+			<link rel='stylesheet' href="/ostation/static/src/css/sodigaz1.css"/>
+		</xpath>
+    </template>
+
+    <template id='2recette'>
+        <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="10"/>
+        <t t-set="data_report_margin_bottom" t-value="5"/>
+        <t t-set="data_report_header_spacing" t-value="5"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <t t-set="cumul" t-value="0" />
+                    <t t-set="total_volume_carburant" t-value="0" />
+                    <t t-set="total_valeur_carburant" t-value="0" />
+                       
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>ETAT DU <span t-esc="datetime.datetime.now().strftime('%d/%m/%Y')"/>: <strong>RECEETES</strong></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <h6 class="mb-3">DU:</h6>
+                                    <div>
+                                        <strong><span t-esc="data['debut']"/></strong>
+                                    </div>
+                                   
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="mb-3">AU:</h6>
+                                    <div>
+                                        <strong><span t-esc="data['fin']"/></strong>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            
+                            <div >
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>DESIGNATIONS</th>
+                                            <th>VOLUME</th>
+                                            <th>PRIX UNITAIRE</th>
+                                            <th>VALEUR</th>
+                                            <th>CUMUL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="super" t-as="super">
+                                        <t t-set="cumul" t-value="cumul + super['valeur_su']" />
+                                        <t t-set="total_volume_carburant" t-value="total_volume_carburant + super['volume_su']" />
+                                        <tr t-set="total_valeur_carburant" t-value="total_valeur_carburant + super['valeur_su']" />
+                                        <tr>
+                                            <td>SUPER</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(super['volume_su']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(super['prixunitaire_su']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(super['valeur_su']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+
+                                        </tr>
+                                        </t>
+                                        <t t-foreach="gasoil" t-as="gasoil">
+                                        <t t-set="cumul" t-value="cumul + gasoil['valeur_ga']" />
+                                        <t t-set="total_volume_carburant" t-value="total_volume_carburant + gasoil['volume_ga']" />
+                                        <tr t-set="total_valeur_carburant" t-value="total_valeur_carburant + gasoil['valeur_ga']" />
+                                        <tr>
+                                            <td>GASOIL</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(gasoil['volume_ga']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(gasoil['prixunitaire_ga']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(gasoil['valeur_ga']).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        </t>
+                                      
+                                        <tr>
+                                            <td>TOTAL</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(total_volume_carburant).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"> - </td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(total_valeur_carburant).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                       
+                                        <tr>
+                                            <td colspan="3">RECETTE CARBURANT</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(total_valeur_carburant).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <t t-set="cumul" t-value="cumul + valeur_lubrifiant" />
+                                            <td colspan="3">RECETTE LUBRIFIANTS</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(valeur_lubrifiant).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <t t-set="cumul" t-value="cumul + valeur_gaz" />
+                                            <td colspan="3">RECETTE  GAZ</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(valeur_gaz).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <t t-set="cumul" t-value="cumul + valeur_lavage" />
+                                            <td colspan="3">RECETTE LAVAGE</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(valeur_lavage).replace(',', ' ').replace('.', ',')"/></td>
+                                           <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <t t-set="cumul" t-value="cumul + valeur_boutique" />
+                                            <td colspan="3">RECETTE BOUTIQUE</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(valeur_boutique).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">RECETTE THEORIQUE</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">BONS/CREDIT</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(valeur_bon).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">ECARTS POMPISTES</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(ecart_pompiste).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">CARBURANT GROUPE ELECTROGENE (Conso-interne)</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(valeur_conso_interne).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">RECETTE REELLE</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(recette_relle).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">BANQUE</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(bank).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">ECARTS</td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(bank-recette_relle).replace(',', ' ').replace('.', ',')"/></td>
+                                            <td align="right"><span t-esc="'{:,.2f}'.format(cumul).replace(',', ' ').replace('.', ',')"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+            </t>
+           
+        </t>
+    </template>
+
+
+     
+
+</odoo>

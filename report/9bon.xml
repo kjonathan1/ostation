@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/ostation/static/src/css/ostation.css"/>
+			<link rel='stylesheet' href="/ostation/static/src/css/sodigaz1.css"/>
+		</xpath>
+    </template>
+
+    <template id='9bondecarburant'>
+        <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="30"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+            <t t-call="web.internal_layout">
+                <div class="page">
+                       
+                       
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                           <h3>ETAT DU <span t-esc="datetime.datetime.now().strftime('%d/%m/%Y')"/>: <strong>BONS</strong></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <h6 class="mb-3">DU:</h6>
+                                    <div>
+                                        <strong><span t-esc="data['debut']"/></strong>
+                                    </div>
+                                   
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="mb-3">AU:</h6>
+                                    <div>
+                                        <strong><span t-esc="data['fin']"/></strong>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+
+                            <div >
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>DATE</th>
+                                            <th>N° BON</th>
+                                            <th>SOCIETE</th>
+                                            <th>CHAUFFEUR</th>
+                                            <th>PRODUITS</th>
+                                            <th>QTITE</th>
+                                            <th>PRIX UNITAIRE</th>
+                                            <th>MONTANT</th>
+                                        </tr>
+                                     </thead>
+                                    <tbody>
+                                        <t t-foreach="bons" t-as="bon">
+                                            <tr>
+                                                <td class="left"><span t-esc="bon['date']"/></td>
+                                                <td class="left"><span t-esc="bon['numero']"/></td>
+                                                <td class="left"><span t-esc="bon['client']"/></td>
+                                                <td class="left"><span t-esc="bon['chauffeur']"/></td>
+                                                <td class="left"><span t-esc="bon['article']"/></td>
+                                                <td class="left"><span t-esc="'{:,.2f}'.format(bon['quantite']).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.2f}'.format(bon['prixunitaire']).replace(',', ' ').replace('.', ',')"/></td>
+                                                <td class="left"><span t-esc="'{:,.2f}'.format(bon['montant']).replace(',', ' ').replace('.', ',')"/></td>
+                                            </tr>
+                                        </t>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+            </t>
+           
+        </t>
+    </template>
+
+
+     
+
+</odoo>

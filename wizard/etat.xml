@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <record id ="etat_form_view" model="ir.ui.view">
+            <field name="name">ostation.etat.form</field>
+            <field name="model">ostation.etat</field>
+            <field name="arch" type="xml">
+
+               <form>
+               
+                  <group>
+                        <group>
+                                <field name="debut"/>
+                                <field name="fin"/>
+                        </group>
+                        <group>
+                                <field name="idstation" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                        </group>
+                        <group>
+                        </group>
+                  </group>
+                  <footer>
+                      <button name="shift_report" string="Shift" type="object" class="btn-primary"/>
+                      <button name="appro_report" string="Appro" type="object" class="btn-primary"/>
+                      <button name="venteperiodique_report" string="Vente Periodique" type="object" class="btn-primary"/>
+                      <button name="mvtrechargegaz_report" string="Recharge gaz" type="object" class="btn-primary"/>
+                      <button name="recette_report" string="Recette" type="object" class="btn-primary"/>
+                      <button name="bon_report" string="Bon" type="object" class="btn-primary"/>
+                      <button name="mvtaccessoiregaz_report" string="Accessoire Gaz" type="object" class="btn-primary"/>
+                      <button name="mvtconsignegaz_report" string="Consigne Gaz" type="object" class="btn-primary"/>
+                      <button name="mvtlubrifiant_report" string="Lubrifiant" type="object" class="btn-primary"/>
+                      <button name="mvtsolaire_report" string="Solaire" type="object" class="btn-primary"/>
+                      <button name="global_report" string="Resumé global" type="object" class="btn-primary"/>
+                  </footer>
+
+                </form>
+            </field>
+      </record>
+
+      <record model="ir.actions.act_window" id="action_ostation_etat">
+            <field name="name">Generer les états</field>
+            <field name="res_model">ostation.etat</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face"> etats
+            </p>
+            </field>
+        </record> 
+ </data>
+</odoo>

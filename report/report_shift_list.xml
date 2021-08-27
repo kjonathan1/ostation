@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/oatation/static/src/css/ostation.css"/>
+		</xpath>
+</template>
+<template id="recapshiftlist">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="2"/>
+        <t t-set="data_report_margin_left" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+            <t t-call="web.basic_layout">
+                <div class="page" style="font-family:Arial, Helvetica, sans-serif; margin-top:20px; padding-top:20px;">
+                    <div>
+                        <h3> <strong> SODIGAZ APC </strong></h3>
+                        
+                    </div>
+                    <hr/>
+                    <div class="bc">LISTE DES SHIFTS</div>
+                    
+                    <div class="tableau">
+                        <table class="table table-bordered" width="100%">
+
+  							<tr>
+							        <th style="width: 15%">SHIFT</th>
+							        <th style="width: 11%">T. Carburant</th>
+                                    <th style="width: 10%">T. Lubrifiant</th>
+                                    <th style="width: 10%">T. Gaz</th>
+                                    <th style="width: 10%">T. Accessoire</th>
+                                    <th style="width: 12%">T Theorique</th>
+                                    <th style="width: 12%">T versé</th>
+                                    <th style="width: 10%">T.Ecart</th>
+                                    <th style="width: 10%">Etat</th>
+							</tr>
+                          
+                        <tbody class="poste esp">
+                            <t t-set="t_carburant" t-value="0" />
+                            <t t-set="t_lubrifiant" t-value="0" />
+                            <t t-set="t_gaz" t-value="0" />
+                            <t t-set="t_accessoire" t-value="0" />
+                            <t t-set="t_theorique" t-value="0" />
+                            <t t-set="t_verse" t-value="0" />
+                            <t t-set="t_ecart" t-value="0" />
+				            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td ><span t-esc="o.name"/></td>
+                                    <td ><span t-esc="'{:,.0f}'.format(o.montantcarburant).replace(',', ' ').replace('.', ',')"/></td>
+                                    <td ><span t-esc="'{:,.0f}'.format(o.montantlubrifiant).replace(',', ' ').replace('.', ',')"/></td>
+                                    <td ><span t-esc="'{:,.0f}'.format(o.montantgaz).replace(',', ' ').replace('.', ',')"/></td>
+                                    <td ><span t-esc="'{:,.0f}'.format(o.montantaccessoire).replace(',', ' ').replace('.', ',')"/></td>
+                                    <td ><span t-esc="'{:,.0f}'.format(o.montanttotaltheorique).replace(',', ' ').replace('.', ',')"/></td>
+                                    <td ><span t-esc="'{:,.0f}'.format(o.montanttotal).replace(',', ' ').replace('.', ',')"/></td>
+                                    <td ><span t-esc="'{:,.0f}'.format(o.ecarttotal).replace(',', ' ').replace('.', ',')"/></td>
+                                    <td ><span t-esc="o.state"/></td>
+                                </tr>
+                                 <t t-set="t_carburant" t-value="t_carburant + o.montantcarburant" />
+                                 <t t-set="t_lubrifiant" t-value="t_lubrifiant + o.montantlubrifiant" />
+                                 <t t-set="t_gaz" t-value="t_gaz + o.montantgaz" />
+                                 <t t-set="t_accessoire" t-value="t_accessoire + o.montantaccessoire" />
+                                 <t t-set="t_theorique" t-value="t_theorique + o.montanttotaltheorique" />
+                                 <t t-set="t_verse" t-value="t_verse + o.montanttotal" />
+                                 <t t-set="t_ecart" t-value="t_ecart + o.ecarttotal" />
+						    </t>
+                            <tr>
+                                <td >TOTAL</td>
+                                <td ><span t-esc="'{:,.0f}'.format(t_carburant).replace(',', ' ').replace('.', ',')"/></td>
+                                <td ><span t-esc="'{:,.0f}'.format(t_lubrifiant).replace(',', ' ').replace('.', ',')"/></td>
+                                <td ><span t-esc="'{:,.0f}'.format(t_gaz).replace(',', ' ').replace('.', ',')"/></td>
+                                <td ><span t-esc="'{:,.0f}'.format(t_accessoire).replace(',', ' ').replace('.', ',')"/></td>
+                                <td ><span t-esc="'{:,.0f}'.format(t_theorique).replace(',', ' ').replace('.', ',')"/></td>
+                                <td ><span t-esc="'{:,.0f}'.format(t_verse).replace(',', ' ').replace('.', ',')"/></td>
+                                <td ><span t-esc="'{:,.0f}'.format(t_ecart).replace(',', ' ').replace('.', ',')"/></td>
+                                <td >-</td>
+                            </tr>
+                          </tbody>
+                          </table>
+                        </div>
+						    </div>
+    <div class="footer text-center pied">
+<div><img src="" /></div>
+    </div>
+
+        </t>
+    </t>
+</template>
+</odoo>

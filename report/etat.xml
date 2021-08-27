@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+        <report 
+            id="report_cuve"
+            model="ostation.cuve"
+            string="Recap des cuves"
+            report_type="qweb-pdf"
+            name="ostation.report_cuve"
+            file="ostation.report_cuve"
+ />
+    </data>
+</odoo>

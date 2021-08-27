@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/oatation/static/src/css/ostation.css"/>
+		</xpath>
+</template>
+<template id="reportarticle">
+    <t t-call="web.html_container">
+        <t t-set="data_report_margin_top" t-value="2"/>
+        <t t-set="data_report_margin_left" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+            <t t-call="web.basic_layout">
+                <div class="page" style="font-family:Arial, Helvetica, sans-serif; margin-top:20px; padding-top:20px;">
+                    <div>
+                        <h3> <strong> SODIGAZ APC </strong></h3>
+                        <p>Le <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/></p>
+                    </div>
+                    <hr/>
+                    <div class="bc">ETATS SUR LES ARTICLES</div>
+                    
+                    <div class="tableau">
+                        <table class="table table-bordered" width="100%">
+
+  							<tr>
+							        <th style="width: 15%">Articles</th>
+                                    <th style="width: 10%">Categorie</th>
+							        <th style="width: 11%">Quantite Dispo.</th>
+                                    <th style="width: 10%">Prix actuel</th>
+                                   
+							</tr>
+                          
+                        <tbody class="poste esp">
+                        
+				            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td ><span t-esc="o.name"/></td>
+                                    <td ><span t-esc="o.idcategoriearticle.type"/></td>
+                                    <td ><span t-esc="'{:,.0f}'.format(o.quantitedisponible).replace(',', ' ').replace('.', ',')"/></td>
+                                    <td ><span t-esc="'{:,.0f}'.format(o.prix).replace(',', ' ').replace('.', ',')"/></td>
+                                </tr>
+						    </t>
+                    
+                          </tbody>
+                          </table>
+                        </div>
+						    </div>
+    <div class="footer text-center pied">
+<div><img src="" /></div>
+    </div>
+
+        </t>
+    </t>
+</template>
+</odoo>

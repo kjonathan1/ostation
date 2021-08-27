@@ -1,0 +1,1141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!--################  debut  formulaire de vue et form du modele societe #####################-->
+
+        <record id ="societe_form_view" model="ir.ui.view">
+            <field name="name">ostation.societe.form</field>
+            <field name="model">ostation.societe</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de société">
+                <group>
+                   <group>
+                       <field name="codesociete"/>
+                       <field name="name"/>
+                       <field name="rccm"/>
+                       <field name="ifu"/>
+                       <field name="active"/>
+                   </group>
+                   <group>
+                        <field name="regime"/>
+                        <field name="division"/>
+                        <field name="adresse"/>
+                    </group>
+                </group> 
+                  <notebook>
+                   <page string="Camion">                          
+                      <field name="lignecamion" widget="one2many_list">   
+                        <tree string="Lignecamions" editable="bottom" edit="True">
+                            <field name="codecamion"/>
+                            <field name="name"/>
+                            <field name="marque"/>
+                            <field name="nbcompartiment"/>
+                            <!-- <field name="idsociete"/>    -->
+                        </tree>
+                      </field>
+                    </page>
+                   <page string="Chauffeur">                          
+                      <field name="lignechauffeur" widget="one2many_list">   
+                        <tree string="Lignechauffeurs" editable="bottom" edit="True">
+                            <field name="codechauffeur"/>
+                            <field name="name"/>
+                            <field name="cnib"/>
+                            <field name="telephone"/>
+                            <field name="adresse"/>   
+                            <!-- <field name="idsociete"/>    -->
+                        </tree>
+                      </field>
+                    </page>
+                </notebook>
+              </form>
+            </field>
+        </record>
+        
+
+        <record id ="societe_tree_view" model="ir.ui.view">
+            <field name="name">ostation.societe.tree</field>
+            <field name="model">ostation.societe</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des sociétés">
+                <field name="codesociete"/>
+                <field name="name"/>
+                <field name="rccm"/>
+                <field name="ifu"/>
+                <field name="regime"/>
+                <field name="division"/>
+                <field name="adresse"/>
+                <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+
+        <record id="societe_search_view" model="ir.ui.view" >
+            <field name="name">ostation.societe.search</field>
+            <field name="model">ostation.societe</field>
+            <field name="arch" type="xml">
+                <search>
+                   <field name="name"/>
+                   <field name="ifu"/>
+                   <field name="active"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_societe">
+            <field name="name">Société</field>
+            <field name="res_model">ostation.societe</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">créer une nouvelle société
+            </p>
+            </field>
+        </record>
+
+         <!--################  fin #####################-->
+
+
+
+         
+       <!--################  debut  formulaire de vue et form du modele station #####################-->
+
+        <record id ="station_form_view" model="ir.ui.view">
+            <field name="name">ostation.station.form</field>
+            <field name="model">ostation.station</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de saisie de station">
+                <group>
+                   <group>
+                      <field name="code"/>
+                      <field name="name"/>
+                      <field name="orangemoney"/>
+                      <field name="adresse"/>
+                      <!-- <field name="quantitebouteillegaz"/> -->
+                      <field name="idemploye" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                      <field name="active"/>
+                   </group>
+                </group> 
+              </form>
+            </field>
+        </record>
+
+        <record id ="station_tree_view" model="ir.ui.view">
+            <field name="name">ostation.station.tree</field>
+            <field name="model">ostation.station</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des sociétés">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="idemploye"/>
+                <!-- <field name="quantitebouteillegaz"/> -->
+                <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+        <record id="station_search_view" model="ir.ui.view" >
+            <field name="name">ostation.station.search</field>
+            <field name="model">ostation.station</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter name="Tout" string="Tout" domain="['|', ('active', '=', True), ('active', '=', False)]" ></filter>
+                   <field name="code"/>
+                   <field name="name"/>
+                   <field name="idemploye"/>
+                  <field name="active"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_station">
+            <field name="name">Station</field>
+            <field name="res_model">ostation.station</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Parametrer une nouvelle station
+            </p>
+            </field>
+        </record>
+
+                     <!--################  fin #####################-->
+
+
+                <!--################  debut  formulaire de vue et form du modele typeshift #####################-->
+
+        <record id ="typeshift_form_view" model="ir.ui.view">
+            <field name="name">ostation.typeshift.form</field>
+            <field name="model">ostation.typeshift</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de parametrage des shifts">
+                <group>
+                   <group>
+                       <field name="name"/>
+                       <field name="ordre"/>
+                       <field name="active"/>
+                   </group>
+                </group> 
+              </form>
+            </field>
+        </record>
+
+        <record id ="typeshift_tree_view" model="ir.ui.view">
+            <field name="name">ostation.typeshift.tree</field>
+            <field name="model">ostation.typeshift</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des typeshifts">
+                 <field name="ordre"/>
+                 <field name="name"/>
+                 <field name="active"/>
+              </tree>
+            </field>
+        </record>       
+
+        <record model="ir.actions.act_window" id="action_ostation_typeshift">
+            <field name="name">Type Shift</field>
+            <field name="res_model">ostation.typeshift</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Parametrer un nouveau shift
+            </p>
+            </field>
+        </record>        
+      
+                               <!--################  fin #####################-->
+
+
+             <!--################  debut  formulaire de vue et form du modele pompe #####################-->
+
+        <record id ="pompe_form_view" model="ir.ui.view">
+            <field name="name">ostation.pompe.form</field>
+            <field name="model">ostation.pompe</field>
+            <field name="arch" type="xml">
+          <form>
+                     <group>
+                       <group>
+                         <field name="codepompe"/>
+                         <field name="idstation"/>
+                          <field name="name"/>
+                          <field name="marque"/>
+                          <field name="datedebutservice"/>
+                          <field name="active"/>
+                       </group>
+                      </group>
+                <notebook>
+                   <page string="Pistolet">                          
+                      <field name="lignepistolet" widget="one2many_list">   
+                          <tree string="LignePistolets" editable="bottom" edit="True">
+                            <field name="codepistolet"/>
+                            <field name="name"/>
+                            <field name="idcuve" options="{'no_quick_create':True, 'no_create_edit':True, 'no_open':True,}"/>
+                            <field name="index"/>
+                          </tree>
+                      </field>
+                    </page>
+                </notebook>
+          </form>
+          </field>
+        </record>
+
+        <record id ="pompe_tree_view" model="ir.ui.view">
+            <field name="name">ostation.pompe.tree</field>
+            <field name="model">ostation.pompe</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des pompes">
+               <field name="codepompe"/>
+                <field name="name"/>
+                <field name="marque"/>
+                <field name="datedebutservice"/>
+                <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+        <record id="pompe_search_view" model="ir.ui.view" >
+            <field name="name">ostation.pompe.search</field>
+            <field name="model">ostation.pompe</field>
+            <field name="arch" type="xml">
+                <search>
+                   <field name="name"/>
+                   <field name="marque"/>
+                   <field name="datedebutservice"/>
+                   <field name="active"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_pompe">
+            <field name="name">Pompe</field>
+            <field name="res_model">ostation.pompe</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Créer une nouvelle pompe
+            </p>
+            </field>
+        </record>       
+        <!--################  fin #####################-->
+
+        <!--################  debut  formulaire de vue et form du modele cuve #####################-->
+
+        <record id ="cuve_form_view" model="ir.ui.view">
+            <field name="name">ostation.cuve.form</field>
+            <field name="model">ostation.cuve</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de création des cuves">
+                <group>
+                   <group>
+                      <field name="codecuve"/>
+                      <field name="idstation" invisible="1"/>
+                      <field name="name"/>
+                      <field name="idarticle"/>
+                      <field name="capacite"/>
+                      <field name="quantitedisponible"/>
+                      <field name="niveaujauge"  readonly='1'/>
+                      <field name="active"/>
+                   </group>
+                </group> 
+              </form>
+            </field>
+        </record>
+
+        <record id ="cuve_tree_view" model="ir.ui.view">
+            <field name="name">ostation.cuve.tree</field>
+            <field name="model">ostation.cuve</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des cuves">
+                <field name="codecuve"/>
+                <field name="idstation"/>
+                <field name="name"/>
+                <field name="idarticle"/>
+                <field name="capacite"/>
+                <field name="quantitedisponible"/>
+                <field name="niveaujauge"/>
+                <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+        <record id="cuve_search_view" model="ir.ui.view" >
+            <field name="name">ostation.cuve.search</field>
+            <field name="model">ostation.cuve</field>
+            <field name="arch" type="xml">
+                <search>
+                   <field name="idstation"/>
+                  <field name="name"/>
+                  <field name="idarticle"/>
+                  <field name="capacite"/>
+                  <field name="quantitedisponible"/>
+                  <field name="niveaujauge"/>
+                  <field name="active"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_cuve">
+            <field name="name">Cuve</field>
+            <field name="res_model">ostation.cuve</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Parametrer une nouvelle pompe
+            </p>
+            </field>
+        </record>    
+
+                 <!--################  fin #####################-->
+
+         <!--################  debut  formulaire de vue et form du modele pistolet #####################-->
+
+        
+    <!--    <record id ="pistolet_form_view" model="ir.ui.view">
+            <field name="name">ostation.pistolet.form</field>
+            <field name="model">ostation.pistolet</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de configuration  des pistolet">
+                <group>
+                   <group>
+                      <field name="idpompe"/>
+                      <field name="idcuve"/>
+                      <field name="name"/>
+                   </group>
+                </group> 
+              </form>
+            </field>
+        </record>
+     
+        <record id ="pistolet_tree_view" model="ir.ui.view">
+            <field name="name">ostation.pistolet.tree</field>
+            <field name="model">ostation.pistolet</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des pistolets">
+                <field name="name"/>
+                <field name="idcuve"/>
+              </tree>
+            </field>
+        </record>
+    
+        <record model="ir.actions.act_window" id="action_ostation_pistolet">
+            <field name="name">Pistolet</field>
+            <field name="res_model">ostation.pistolet</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Parametrer un pistolet
+            </p>
+            </field>
+        </record>  -->   
+
+                        <!--################  fin #####################-->
+
+
+    <!--#######  debut  formulaire de vue et form du modele banque ##########-->
+
+        <record id ="banque_form_view" model="ir.ui.view">
+            <field name="name">ostation.banque.form</field>
+            <field name="model">ostation.banque</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de création  des banques">
+                <group>
+                   <group>
+                      <field name="codebanque"/>
+                      <field name="name"/>
+                       <field name="active"/>
+                   </group>
+                </group> 
+              </form>
+            </field>
+        </record>
+
+
+        <record id ="banque_tree_view" model="ir.ui.view">
+            <field name="name">ostation.banque.tree</field>
+            <field name="model">ostation.banque</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des banques">
+                <field name="codebanque"/>
+                <field name="name"/>
+                <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_banque">
+            <field name="name">Banque</field>
+            <field name="res_model">ostation.banque</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Créer une banque
+            </p>
+            </field>
+        </record>    
+
+                      <!--################  fin #####################-->
+
+
+            <!--#######  debut  formulaire de vue et form du modele employe ##########-->
+
+
+        <record id ="employe_form_view" model="ir.ui.view">
+            <field name="name">ostation.employe.form</field>
+            <field name="model">ostation.employe</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de création  des employés">
+                 <header>
+                 </header>
+                <group>
+                   <group>
+                      <field name="codeemploye"/>
+                      <field name="nom"/>
+                      <field name="prenom"/>
+                      <field name="dateembauche"/>
+                      <field name="telephone"/>
+                      <field name="cnib"/>
+                   </group>
+                   <group>
+                      <field name="adresse"/>
+                      <field name="idcategorieemploye"/>
+                      <field name="idstation"/>
+                      <field name="active"/>
+                      <field name="ecart"/>
+                   </group>
+                </group>
+                  <notebook>
+                        <!-- les ventes -->
+                        <page string="Détails Ecarts"> 
+                            <field name="ligneecart" >
+                                <tree editable="bottom" string="Détails Ecarts">
+                                    <field name="idshift"  />
+                                    <field name="date"  />
+                                    <field name="ecart" sum="Total"/>
+                                    
+                                    <field name="motif" />
+                                    <field name="state" />
+                                </tree>
+                            </field>
+                           
+                        </page>
+                        <page string="Détails soldage"> 
+                            <field name="lignesolde" >
+                                <tree editable="bottom" string="Détails soldage">
+                                   
+                                    <field name="date"  />
+                                    <field name="motif" />
+                                    <field name="montant" sum="Total"/>
+                                    <field name="state" invisible="1" />
+                                </tree>
+                            </field>
+                           
+                        </page>
+                      </notebook>
+              </form>
+            </field>
+        </record>
+
+        <record id ="employe_tree_view" model="ir.ui.view">
+            <field name="name">ostation.employe.tree</field>
+            <field name="model">ostation.employe</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des employés">    
+                 <field name="codeemploye"/>
+                 <field name="nom"/>
+                 <field name="prenom"/>
+                 <field name="telephone"/>
+                 <field name="cnib"/>
+                 <field name="dateembauche"/>
+                 <field name="adresse"/>
+                 <field name="idcategorieemploye"/>
+                 <field name="idstation"/>
+                 <field name="ecart"/>
+                 <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+
+        <record id="employe_search_view" model="ir.ui.view" >
+            <field name="name">ostation.employe.search</field>
+            <field name="model">ostation.employe</field>
+            <field name="arch" type="xml">
+                <search>
+                 <field name="codeemploye"/>
+                 <field name="nom"/>
+                 <field name="prenom"/>
+                 <field name="telephone"/>
+                 <field name="cnib"/>
+                 <field name="dateembauche"/>
+                 <field name="adresse"/>
+                 <field name="idcategorieemploye"/>
+                 <field name="idstation"/>
+                 <field name="active"/>          
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_ostation_employe">
+            <field name="name">Employés</field>
+            <field name="res_model">ostation.employe</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Créer un employé
+            </p>
+            </field>
+        </record>    
+
+          <!--################  fin #####################-->
+
+
+           <!--#######  debut  formulaire de vue et form du modele categorie employé ##########-->
+
+        <record id="categorieemploye_form_view" model="ir.ui.view">
+           <field name = "name">Categorie employe</field>
+           <field name = "model">ostation.categorieemploye</field>
+           <field name="arch" type="xml">
+              <form string="Catégorie des employés">
+                  <group>
+                      <group>
+                        <field name="codecategorieemploye"/>
+                        <field name="name"/>
+                        <!-- <field name= "active"/> -->
+                      </group>
+                      <!-- <group>
+                      </group> -->
+                  </group>
+              </form>
+           </field>
+        </record>
+
+        <record id ="categorieemploye_tree_view" model="ir.ui.view">
+            <field name="name">ostation.categorieemploye.tree</field>
+            <field name="model">ostation.categorieemploye</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des employés">    
+                 <field name="name"/>
+                 <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_categorieemploye">
+            <field name="name">Catégorie des employés</field>
+            <field name="res_model">ostation.categorieemploye</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Créer un employé
+            </p>
+            </field>
+        </record>    
+
+
+
+                                  <!--################  fin #####################-->
+
+
+                                  
+        <!--#######  debut  formulaire de vue et form du modele des articles #####-->
+
+        <record id ="article_form_view" model="ir.ui.view">
+            <field name="name">ostation.article.form</field>
+            <field name="model">ostation.article</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de création  des articles">
+                <group>
+                   <group>
+                      <field name="codearticle"/>
+                      <field name="name"/>
+                      <field name="description"/>
+                      <field name="idcategoriearticle"/>
+                   </group>
+                   <group>
+                      <field name="typearticle" invisible="1"/>
+                      <field name="prix"/>
+                      <field name="cout"/>
+                      <field name="quantitedisponible"/>
+                      <field name="quantitebouteillevide" attrs="{'invisible': [('typearticle', '!=', 'rechargegaz')]}"/>
+                       <field name="active"/>
+                   </group>
+                </group> 
+              </form>
+            </field>
+        </record>
+
+        <record id ="article_tree_view" model="ir.ui.view">
+            <field name="name">ostation.article.tree</field>
+            <field name="model">ostation.article</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des article">    
+                <field name="codearticle"/>
+                 <field name="name"/>
+                 <field name="idcategoriearticle"/>
+                 <field name="prix"/>
+                 <field name="cout"/>
+                 <field name="quantitedisponible"/>
+                 <field name="quantitebouteillevide"/>
+                 <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+        <record id="article_search_view" model="ir.ui.view" >
+            <field name="name">ostation.article.search</field>
+            <field name="model">ostation.article</field>
+            <field name="arch" type="xml">
+                <search>
+                 <field name="name"/>
+                 <field name="idcategoriearticle"/>
+                 <field name="prix"/>
+                 <field name="quantitedisponible"/>
+                 <field name="quantitebouteillevide"/>
+                 <field name="active"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_article">
+            <field name="name">Article</field>
+            <field name="res_model">ostation.article</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Créer un article
+            </p>
+            </field>
+        </record>    
+
+                    <!--################  fin #####################-->
+
+
+         <!--#######  debut  formulaire de vue et form du modele categorie article ##########-->
+
+        <record id ="categoriearticle_tree_view" model="ir.ui.view">
+            <field name="name">ostation.categoriearticle.tree</field>
+            <field name="model">ostation.categoriearticle</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des categories d'article">    
+                 <field name="codecategoriearticle"/>
+                 <field name="name"/>
+                 <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+                                <!--################  fin #####################-->
+
+          <!--#######  debut  formulaire de vue et form du modele categorie client ##########-->
+
+
+        <record id ="client_form_view" model="ir.ui.view">
+            <field name="name">ostation.client.form</field>
+            <field name="model">ostation.client</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de création  des clients">
+                <group>
+                   <group>
+                      <field name="codeclient"/>
+                      <field name="name"/>
+                      <field name="idcategorieclient"/>
+                      <field name="adresse"/>
+                       <field name="active"/>
+                   </group>
+                </group> 
+              </form>
+            </field>
+        </record>
+
+
+        <record id ="client_tree_view" model="ir.ui.view">
+            <field name="name">ostation.client.tree</field>
+            <field name="model">ostation.client</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des clients"> 
+                <field name="codeclient"/>   
+                 <field name="name"/>
+                 <field name="adresse"/>
+                 <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+        <record id="client_search_view" model="ir.ui.view" >
+            <field name="name">ostation.client.search</field>
+            <field name="model">ostation.client</field>
+            <field name="arch" type="xml">
+                <search>
+                 <field name="name"/>
+                 <!-- <field name="prenom"/> -->
+                 <field name="adresse"/>
+                 <field name="active"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_client">
+            <field name="name">Client</field>
+            <field name="res_model">ostation.client</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Créer un client
+            </p>
+            </field>
+        </record>    
+
+                 <!--################  fin #####################-->
+
+
+                  <!--#######  debut  formulaire de vue et form du modele categorie client ##########-->
+
+        <record id ="categoriearticle_tree_view" model="ir.ui.view">
+            <field name="name">ostation.categorieclient.tree</field>
+            <field name="model">ostation.categorieclient</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des categories de client">    
+                 <field name="name"/>
+                 <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+                                <!--################  fin #####################-->
+
+
+            <!--#######  debut  formulaire de vue et form du modele des chauffeurs ########-->
+
+        <!-- <record id ="chauffeur_form_view" model="ir.ui.view">
+            <field name="name">ostation.chauffeur.form</field>
+            <field name="model">ostation.chauffeur</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de création  des chauffeurs">
+                <group>
+                   <group>
+                      <field name="codechauffeur"/>
+                      <field name="name"/>
+                      <!- <field name="prenom"/> -->
+                      <!-- <field name="adresse"/>
+                       <field name="active"/>
+                   </group>
+                </group> 
+              </form>
+            </field>
+        </record> -->
+<!-- 
+        <record id ="chauffeur_tree_view" model="ir.ui.view">
+            <field name="name">ostation.chauffeur.tree</field>
+            <field name="model">ostation.chauffeur</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des chauffeurs">    
+                 <field name="name"/>
+                 <!- <field name="prenom"/> -->
+                 <!-- <field name="adresse"/>
+                 <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+        <record id="chauffeur_search_view" model="ir.ui.view" >
+            <field name="name">ostation.chauffeur.search</field>
+            <field name="model">ostation.client</field>
+            <field name="arch" type="xml">
+                <search>
+                 <field name="name"/> -->
+                 <!-- <field name="prenom"/> -->
+                 <!-- <field name="adresse"/>
+                 <field name="active"/>
+                </search>
+            </field>
+        </record> -->
+
+
+        <!-- <record model="ir.actions.act_window" id="action_ostation_chauffeur">
+            <field name="name">Chauffeur</field>
+            <field name="res_model">ostation.chauffeur</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Créer un chauffeur
+            </p>
+            </field>
+        </record>     --> 
+
+             <!--################  fin #####################-->
+
+        <!--#######  debut  formulaire de vue et form du modele mode de paiement ########-->
+
+        <record id ="typepaiement_form_view" model="ir.ui.view">
+            <field name="name">ostation.typepaiement.form</field>
+            <field name="model">ostation.typepaiement</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de création  des modes de paiement">
+                <group>
+                   <group>
+                      <field name="codetypepaiement"/>
+                      <field name="name"/>
+                   </group>
+                </group> 
+              </form>
+            </field>
+        </record>
+
+        <record id ="typepaiement_tree_view" model="ir.ui.view">
+            <field name="name">ostation.typepaiement.tree</field>
+            <field name="model">ostation.typepaiement</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des differents mode de paiement">  
+                 <field name="codetypepaiement"/>  
+                 <field name="name"/>
+                 <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_ostation_typepaiement">
+            <field name="name">Mode de paiement</field>
+            <field name="res_model">ostation.typepaiement</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face"> Ajouter un Mode de paiement
+            </p>
+            </field>
+        </record>    
+
+            <!--################  fin #####################-->
+
+
+            <!--#######  debut  formulaire de vue et form du modele camion ########-->
+
+        <!-- <record id ="camion_form_view" model="ir.ui.view">
+            <field name="name">ostation.camion.form</field>
+            <field name="model">ostation.camion</field>
+            <field name="arch" type="xml">
+              <form string="Formulaire de création  des camions">
+                <group>
+                   <group>
+                      <field name="codecamion"/>
+                      <field name="name"/>
+                      <field name="marque"/>
+                      <field name="active"/>
+                   </group>
+                   <group>
+                      <field name="capacite"/>
+                      <field name="nbcompartiment"/>      
+                   </group>
+                </group> 
+              </form>
+            </field>
+        </record>
+
+        <record id ="camion_tree_view" model="ir.ui.view">
+            <field name="name">ostation.camion.tree</field>
+            <field name="model">ostation.camion</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste des camions">    
+                 <field name="name"/>
+                 <field name="marque"/>
+                 <field name="capacite"/>
+                 <field name="nbcompartiment"/>
+                 <field name="active"/>
+              </tree>
+            </field>
+        </record>
+
+        <record id="camion_search_view" model="ir.ui.view" >
+            <field name="name">ostation.camion.search</field>
+            <field name="model">ostation.camion</field>
+            <field name="arch" type="xml">
+                <search>
+                 <field name="name"/>
+                 <field name="marque"/>
+                 <field name="active"/>
+                </search>
+            </field>
+        </record> -->
+        
+
+        <record model="ir.actions.act_window" id="action_ostation_camion">
+            <field name="name">Camion</field>
+            <field name="res_model">ostation.camion</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face"> Ajouter un camion
+            </p>
+            </field>
+        </record>    
+                        <!--################  fin #####################-->
+        <!--################  mouvement stock #####################-->
+         <record id ="mouvementstock_tree_view" model="ir.ui.view">
+            <field name="name">ostation.mouvementstock.tree</field>
+            <field name="model">ostation.mouvementstock</field>
+            <field name="arch" type="xml">
+               <tree string = "" edit="false" create="false" delete="false">    
+                 <field name="idstation"/>
+                 <field name="date"/>
+                 <field name="type"/>
+                 <field name="idshift"/>
+                 <field name="idcuve"/>
+                 <field name="idarticle"/>
+                 <field name="quantiteentree"/>
+                 <field name="quantitesortie"/>
+                 <field name="motif"/>
+              </tree>
+            </field>
+        </record>
+
+
+         <record id="mouvementstock_search_view" model="ir.ui.view" >
+            <field name="name">ostation.mouvementstock.search</field>
+            <field name="model">ostation.mouvementstock</field>
+            <field name="arch" type="xml">
+                <search>
+                 <field name="date"/>
+                  <field name="type"/>
+                 <field name="idshift"/>
+                 <field name="idcuve"/>
+                 <field name="idarticle"/>
+                 <field name="quantiteentree"/>
+                 <field name="quantitesortie"/>
+                 <field name="motif"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_mouvementstock">
+            <field name="name">Mouvement de stock</field>
+            <field name="res_model">ostation.mouvementstock</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face"> Mouvement de stcok
+            </p>
+            </field>
+        </record> 
+      <!--################  fin mouvement stock #####################-->
+       <!--################  ecartpompiste #####################-->
+         <record id ="ecartpompiste_tree_view" model="ir.ui.view">
+            <field name="name">ostation.ecartpompiste.tree</field>
+            <field name="model">ostation.ecartpompiste</field>
+            <field name="arch" type="xml">
+               <tree string = "Ecart pompiste" edit="false" create="false" delete="false">    
+                  <field name="idemploye"/>
+                  <field name="date"/>
+                  <field name="idshift"/>
+                  <field name="ecart"/>
+                  <field name="motif"/>
+              </tree>
+            </field>
+        </record>
+
+
+         <record id="ecartpompiste_search_view" model="ir.ui.view" >
+            <field name="name">ostation.ecartpompiste.search</field>
+            <field name="model">ostation.ecartpompiste</field>
+            <field name="arch" type="xml">
+                <search>
+                 <field name="idemploye"/>
+                  <field name="date"/>
+                  <field name="idshift"/>
+                  <field name="ecart"/>
+                  <field name="motif"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_ecartpompiste">
+            <field name="name">Ecart pompiste</field>
+            <field name="res_model">ostation.ecartpompiste</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face"> ecart pompiste
+            </p>
+            </field>
+        </record> 
+      <!--################  fin ecartpompiste #####################-->
+
+
+      <!--################  Afiichqge des catégories #####################-->
+      <record id ="categoriearticle_form_view" model="ir.ui.view">
+            <field name="name">ostation.categoriearticle.form</field>
+            <field name="model">ostation.categoriearticle</field>
+            <field name="arch" type="xml">
+              <form string="Categorie article">
+                <group>
+                <group>
+                    <field name="codecategoriearticle"/>
+                    <field name="name"/>
+                    <field name="type"/>
+                </group> 
+                </group> 
+              </form>
+            </field>
+        </record>
+
+        <record id ="categoriearticle_tree_view" model="ir.ui.view">
+            <field name="name">ostation.categoriearticle.tree</field>
+            <field name="model">ostation.categoriearticle</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste catégorie article">
+                <field name="codecategoriearticle"/>
+                <field name="name"/>
+                <field name="type"/>
+              </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_categoriearticle">
+            <field name="name">Categorie article</field>
+            <field name="res_model">ostation.categoriearticle</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Parametrer une nouvelle categorie article
+            </p>
+            </field>
+        </record>  
+        <!--  ****  -->
+        <record id ="categorieclient_form_view" model="ir.ui.view">
+            <field name="name">ostation.categorieclient.form</field>
+            <field name="model">ostation.categorieclient</field>
+            <field name="arch" type="xml">
+              <form string="Categorie client">
+                <group>
+                <group>
+                    <field name="codecategorieclient"/>            
+                    <field name="name"/>            
+                </group> 
+                </group> 
+              </form>
+            </field>
+        </record>
+
+        <record id ="categorieclient_tree_view" model="ir.ui.view">
+            <field name="name">ostation.categorieclient.tree</field>
+            <field name="model">ostation.categorieclient</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste catégorie client">
+                <field name="codecategorieclient"/> 
+                <field name="name"/>
+              </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_categorieclient">
+            <field name="name">Catégorie client</field>
+            <field name="res_model">ostation.categorieclient</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Parametrer une nouvelle catégorie client
+            </p>
+            </field>
+        </record>   
+         <!--  ****  -->
+         <record id ="categoriedepense_form_view" model="ir.ui.view">
+            <field name="name">ostation.categoriedepense.form</field>
+            <field name="model">ostation.categoriedepense</field>
+            <field name="arch" type="xml">
+              <form string="Categorie dépense">
+                <group>
+                <group>
+                    <field name="name"/> 
+                </group> 
+                </group> 
+              </form>
+            </field>
+        </record>
+
+        <record id ="categoriedepense_tree_view" model="ir.ui.view">
+            <field name="name">ostation.categoriedepense.tree</field>
+            <field name="model">ostation.categoriedepense</field>
+            <field name="arch" type="xml">
+               <tree string = "Liste catégorie dépense">
+                <field name="name"/>         
+              </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ostation_categoriedepense">
+            <field name="name">Catégorie dépense</field>
+            <field name="res_model">ostation.categoriedepense</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">Parametrer une nouvelle catégorie dépense
+            </p>
+            </field>
+        </record>   
+        
+      <!--################  fin Afiichqge des catégories #####################-->  
+        <!-- <record id="ostation_chauffeur_tree" model="ir.ui.view">
+            <field name="name">ostation.chauffeur.tree</field>
+            <field name="model">ostation.chauffeur</field>
+            <field name="arch" type="xml">
+                <tree string="Chauffeur">
+                    <field name="name" />
+                    <field name="cnib" />
+                    <field name="telephone" />
+                    <field name="adresse" />
+                 </tree>
+            </field>
+        </record> 
+        <record model="ir.actions.act_window" id="action_ostation_chauffeur">
+            <field name="name">Liste des chauffeurs</field>
+            <field name="res_model">ostation.chauffeur</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class = "o_view_nocontent_smiling_face">
+            </p>
+            </field>
+        </record>            -->
+    </data>
+</odoo>
