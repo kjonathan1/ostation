@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "odoo14",
+            "type": "python",
+            "request": "launch",
+            "program": "/opt/odoo/odoo-bin",
+            "console": "integratedTerminal",
+            "args": [
+                "-c",
+                "/opt/odoo/odoo.conf",
+                "--limit-time-real",
+                "99999"
+            ]
+        }
+    ]
+}

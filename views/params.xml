@@ -916,7 +916,7 @@
             </p>
             </field>
         </record>    
-                        <!--################  fin #####################-->
+        <!--################  fin #####################-->
         <!--################  mouvement stock #####################-->
          <record id ="mouvementstock_tree_view" model="ir.ui.view">
             <field name="name">ostation.mouvementstock.tree</field>
